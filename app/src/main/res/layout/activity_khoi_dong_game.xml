@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/start_background"
-    tools:context="com.nguyenthanhchung.carop2p.KhoiDongGameActivity">
+    tools:context="com.nguyenthanhchung.carop2p.activity.KhoiDongGameActivity">
 
     <Button
         android:id="@+id/btnPlay"
