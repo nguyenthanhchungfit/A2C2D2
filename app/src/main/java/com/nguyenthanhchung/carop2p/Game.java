@@ -5,8 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
-import com.nguyenthanhchung.carop2p.handler.WiFiDirectReceiver;
-import com.nguyenthanhchung.carop2p.model.Sender;
+import com.nguyenthanhchung.carop2p.handler.Sender;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
