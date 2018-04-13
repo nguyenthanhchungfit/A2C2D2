@@ -10,7 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainGameActivity"
+        <activity android:name=".activity.KhoiDongGameActivity"
+            android:screenOrientation="landscape"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.MainGameActivity"
             android:screenOrientation="landscape"
             >
         </activity>

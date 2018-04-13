@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.nguyenthanhchung.carop2p.FragmentCallBacks;
-import com.nguyenthanhchung.carop2p.MainGameActivity;
+import com.nguyenthanhchung.carop2p.activity.MainGameActivity;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.adapter.ImageCellAdapter;
 import com.nguyenthanhchung.carop2p.model.CellBoard;
