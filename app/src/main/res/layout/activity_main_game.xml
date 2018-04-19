@@ -41,11 +41,24 @@
     </FrameLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnOpenEmotionBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:background="@null"
+        app:srcCompat="@drawable/emo1" />
+
+    <FrameLayout
+        android:id="@+id/fragmentEmotionBoard"
+        android:layout_width="227dp"
+        android:layout_height="130dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
+
+    </FrameLayout>
 
 </RelativeLayout>
