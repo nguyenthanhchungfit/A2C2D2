@@ -1,4 +1,4 @@
-package com.nguyenthanhchung.carop2p;
+package com.nguyenthanhchung.carop2p.activity;
 
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;

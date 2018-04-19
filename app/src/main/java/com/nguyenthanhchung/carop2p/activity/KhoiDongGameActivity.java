@@ -1,5 +1,6 @@
 package com.nguyenthanhchung.carop2p.activity;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ public class KhoiDongGameActivity extends AppCompatActivity {
 
     public void playGame(View view) {
         button_click_sound.start();
+        startActivity(new Intent(KhoiDongGameActivity.this, MainGameActivity.class));
         //code switch to play game screen here
     }
 
