@@ -2,11 +2,8 @@ package com.nguyenthanhchung.carop2p.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
-<<<<<<< Updated upstream
 import android.content.Intent;
-=======
 import android.media.MediaPlayer;
->>>>>>> Stashed changes
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
