@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 
 import com.nguyenthanhchung.carop2p.R;
 
 public class KhoiDongGameActivity extends AppCompatActivity {
     MediaPlayer background_song;
     MediaPlayer button_click_sound;
+    Button btnPlay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,19 @@ public class KhoiDongGameActivity extends AppCompatActivity {
         background_song.setLooping(true);
         button_click_sound = MediaPlayer.create(KhoiDongGameActivity.this,R.raw.button_click);
         turnOnBackGroundSong();
+
+        //Init button
+        btnPlay = findViewById(R.id.btnPlay);
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button_click_sound.start();
+                //code switch to play game screen here
+                Intent intent = new Intent(getApplicationContext(),WiFiDirectActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
     @Override
     protected void onPause() {
@@ -44,12 +59,6 @@ public class KhoiDongGameActivity extends AppCompatActivity {
         if(background_song.isPlaying()){
             background_song.stop();
         }
-    }
-
-    public void playGame(View view) {
-        button_click_sound.start();
-        startActivity(new Intent(KhoiDongGameActivity.this, MainGameActivity.class));
-        //code switch to play game screen here
     }
 
     public void guideGame(View view) {

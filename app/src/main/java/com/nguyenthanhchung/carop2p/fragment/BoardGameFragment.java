@@ -2,6 +2,7 @@ package com.nguyenthanhchung.carop2p.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -14,6 +15,7 @@ import android.widget.GridView;
 import com.nguyenthanhchung.carop2p.FragmentCallBacks;
 import com.nguyenthanhchung.carop2p.activity.MainGameActivity;
 import com.nguyenthanhchung.carop2p.R;
+import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
 import com.nguyenthanhchung.carop2p.adapter.ImageCellAdapter;
 import com.nguyenthanhchung.carop2p.model.CellBoard;
 
@@ -24,7 +26,7 @@ import java.util.ArrayList;
  */
 
 public class BoardGameFragment extends Fragment implements FragmentCallBacks {
-    MainGameActivity main;
+    WiFiDirectActivity main;
     Context context = null;
     GridView gvBoard;
     ImageCellAdapter adapter;
@@ -45,7 +47,7 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks {
         super.onCreate(savedInstanceState);
         try{
             context = getActivity();
-            main = (MainGameActivity)getActivity();
+            main = (WiFiDirectActivity)getActivity();
         }catch (IllegalStateException e){
             throw  new IllegalStateException("MainGame must implements Callbacks");
         }
@@ -77,6 +79,7 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks {
                         flag = true;
                     }
                     adapter.notifyDataSetChanged();
+                    main.onMsgFromFragmentToMainGame("GameBoard", ((Integer)position).toString());
                 }
             }
         });
