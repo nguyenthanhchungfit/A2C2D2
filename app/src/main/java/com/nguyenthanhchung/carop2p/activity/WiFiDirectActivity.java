@@ -1,5 +1,6 @@
 package com.nguyenthanhchung.carop2p.activity;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WpsInfo;
@@ -14,16 +15,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.nguyenthanhchung.carop2p.MainGameActivityCallBacks;
 import com.nguyenthanhchung.carop2p.R;
+import com.nguyenthanhchung.carop2p.fragment.BoardEmotionFragment;
+import com.nguyenthanhchung.carop2p.fragment.BoardGameFragment;
 import com.nguyenthanhchung.carop2p.handler.ActionListenerHandler;
 import com.nguyenthanhchung.carop2p.handler.WiFiDirectReceiver;
+import com.nguyenthanhchung.carop2p.model.PackageData;
+import com.nguyenthanhchung.carop2p.model.TypePackage;
 
 import java.util.ArrayList;
 
-public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pManager.ChannelListener{
+public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pManager.ChannelListener, MainGameActivityCallBacks {
 
     private static final String TAG ="WiFiDirectActivity";
     private WifiP2pManager mManager;
@@ -39,11 +47,22 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     private static WiFiDirectActivity thisActivity;
     private ListView deviceListView;
     private Button btn;
+
+
+    FragmentTransaction fragmentTransaction;
+    BoardGameFragment boardGameFragment;
+    BoardEmotionFragment emotionBoardFragmet;
+    ImageButton btnOpenEmotionBoard;
+    boolean isOpenedEmotionBoard = false;
+
+    RelativeLayout layoutGame;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wi_fi_direct);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
 
@@ -65,15 +84,15 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         deviceListView = (ListView)findViewById(R.id.list_view);
         deviceListView.setAdapter(hybridAdapter);
 
-        //Demo mẫu send msg, xem trong log
-        btn = findViewById(R.id.btnSend);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mReceiver != null)
-                    mReceiver.sendMsg("13213213132");
-            }
-        });
+//        //Demo mẫu send msg, xem trong log
+//        btn = findViewById(R.id.btnSend);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(mReceiver != null)
+//                    mReceiver.sendMsg("13213213132");
+//            }
+//        });
 
         //Kết nối với thiết bị khi click
         deviceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,10 +107,60 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             }
         });
 
-
         thisActivity=this;
         opponentsName="Opponent";
+
+        layoutGame = findViewById(R.id.layoutGame);
+        layoutGame.setVisibility(RelativeLayout.INVISIBLE);
+        //this.Show();
+
     }
+
+    private void showEmotionBoard(){
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.show(emotionBoardFragmet);
+        fragmentTransaction.commit();
+    }
+
+    private void hideEmotionBoard(){
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.hide(emotionBoardFragmet);
+        fragmentTransaction.commit();
+    }
+
+    private void addEvents() {
+        btnOpenEmotionBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isOpenedEmotionBoard == false){
+                    showEmotionBoard();
+                    isOpenedEmotionBoard = true;
+                }
+            }
+        });
+    }
+
+
+
+    private void addControls() {
+
+        btnOpenEmotionBoard = findViewById(R.id.btnOpenEmotionBoard);
+
+        // add fragment boardgame
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        boardGameFragment = BoardGameFragment.newInstance("boardGame");
+        fragmentTransaction.replace(R.id.fragmentBoardGame, boardGameFragment);
+        fragmentTransaction.commit();
+
+        // add fragment emotion board
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        emotionBoardFragmet = BoardEmotionFragment.newInstance("EmotionBoard");
+        fragmentTransaction.replace(R.id.fragmentEmotionBoard, emotionBoardFragmet);
+        fragmentTransaction.hide(emotionBoardFragmet);
+        fragmentTransaction.commit();
+    }
+
+
     /**
      * Tìm kiếm thiết bị có thể kết nối
      * */
@@ -197,7 +266,13 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
 
     /*Đóng show listView danh sách các thiết bị*/
     public void Show(){
-        deviceListView.setVisibility(View.INVISIBLE);
+        //deviceListView.setVisibility(View.INVISIBLE);
+        layoutGame.setVisibility(RelativeLayout.VISIBLE);
+        addControls();
+    }
+
+    public void Hide(){
+
     }
 
     /*Gửi msg sang thiết bị khác*/
@@ -221,4 +296,29 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             Log.d(TAG, "WIFI Direct reinitialize : FAILURE");
         }
     }
+
+    /**
+     * Nhận dữ liệu từ Fragment và gửi sang thiết bị khác bằng sendMsg
+     * @param sender
+     * @param strValue
+     */
+    @Override
+    public void onMsgFromFragmentToMainGame(String sender, String strValue) {
+        Log.d(TAG,"From: " + sender + " - Value: " + strValue);
+        if(sender == null || strValue == null) return;
+        if(sender.equals("EmotionBoard")){
+            if(strValue.equals("close")){
+                if(isOpenedEmotionBoard){
+                    hideEmotionBoard();
+                    isOpenedEmotionBoard = false;
+                }
+            }
+        }else if(sender.equals("GameBoard")){
+            PackageData packageData = new PackageData();
+            packageData.type = TypePackage.TURN;
+            packageData.msg = strValue;
+            sendMsg(packageData.toString());
+        }
+    }
+
 }
