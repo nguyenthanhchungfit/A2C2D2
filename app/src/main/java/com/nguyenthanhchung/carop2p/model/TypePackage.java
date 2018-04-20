@@ -4,7 +4,9 @@ public enum TypePackage {
     //Type Define
     ERROR("ERROR", 0),
     START("START", 1),
-    END("END", 2);
+    END("END", 2),
+    TURN("TURN", 3);
+
 
     private String stringValue;
     private int intValue;

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.nguyenthanhchung.carop2p.FragmentCallBacks;
 import com.nguyenthanhchung.carop2p.activity.MainGameActivity;
 import com.nguyenthanhchung.carop2p.R;
+import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
 import com.nguyenthanhchung.carop2p.adapter.ImageEmotionAdapter;
 import com.nguyenthanhchung.carop2p.model.ImageEmotion;
 
@@ -27,7 +28,7 @@ import java.util.ArrayList;
  */
 
 public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
-    MainGameActivity main;
+    WiFiDirectActivity main;
     Context context = null;
     GridView gvBoardEmotion;
     ImageEmotionAdapter adapter;
@@ -47,7 +48,7 @@ public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
         super.onCreate(savedInstanceState);
         try{
             context = getActivity();
-            main = (MainGameActivity)getActivity();
+            main = (WiFiDirectActivity)getActivity();
         }catch (IllegalStateException e){
             throw  new IllegalStateException("Main game must implements Callback");
         }
