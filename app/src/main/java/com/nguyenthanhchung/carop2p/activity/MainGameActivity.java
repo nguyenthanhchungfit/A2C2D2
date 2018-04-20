@@ -1,6 +1,7 @@
 package com.nguyenthanhchung.carop2p.activity;
 
 import android.app.FragmentTransaction;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ public class MainGameActivity extends AppCompatActivity implements MainGameActiv
     BoardGameFragment boardGameFragment;
     BoardEmotionFragment  emotionBoardFragmet;
     ImageButton btnOpenEmotionBoard;
+    MediaPlayer background_song;
     boolean isOpenedEmotionBoard = false;
 
     @Override
@@ -27,11 +29,25 @@ public class MainGameActivity extends AppCompatActivity implements MainGameActiv
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main_game);
-
+        background_song = MediaPlayer.create(MainGameActivity.this,R.raw.playgame_sound);
+        background_song.setLooping(true);
+        turnOnBackGroundSong();
         addControls();
         addEvents();
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        background_song.release();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(background_song.isPlaying()==false){
+            background_song.start();
+        }
+    }
     private void addEvents() {
         btnOpenEmotionBoard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,5 +106,14 @@ public class MainGameActivity extends AppCompatActivity implements MainGameActiv
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.hide(emotionBoardFragmet);
         fragmentTransaction.commit();
+    }
+    public void turnOnBackGroundSong(){
+        background_song.start();
+    }
+
+    public void turnOffBackGroundSong(View v){
+        if(background_song.isPlaying()){
+            background_song.stop();
+        }
     }
 }

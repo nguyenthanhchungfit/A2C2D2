@@ -2,7 +2,11 @@ package com.nguyenthanhchung.carop2p.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+<<<<<<< Updated upstream
 import android.content.Intent;
+=======
+import android.media.MediaPlayer;
+>>>>>>> Stashed changes
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -32,6 +36,7 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks {
     ImageCellAdapter adapter;
     final int MAX_CELLS = 225;
     ArrayList<CellBoard> listImage;
+    MediaPlayer check_click;
     boolean flag = false;
 
     public static BoardGameFragment newInstance(String strArgs){
@@ -59,6 +64,7 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks {
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.layout_board_game_fragment,
                 null);
         gvBoard = layout.findViewById(R.id.gvBoard);
+        check_click = MediaPlayer.create(getActivity().getApplicationContext(),R.raw.pop);
         listImage = new ArrayList<>();
         for(int i =0; i< MAX_CELLS; i++){
             listImage.add(new CellBoard(R.drawable.ic_empty_cell, false));
@@ -72,9 +78,11 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks {
                     CellBoard m_img = listImage.get(position);
                     m_img.setFilled(true);
                     if(flag){   // x
+                        check_click.start();
                         m_img.setIdImage(R.drawable.ic_x);
                         flag = false;
                     }else{  // o
+                        check_click.start();
                         m_img.setIdImage(R.drawable.ic_o);
                         flag = true;
                     }
