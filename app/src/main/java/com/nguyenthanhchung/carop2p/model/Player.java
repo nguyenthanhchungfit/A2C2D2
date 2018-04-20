@@ -1,4 +1,4 @@
-package com.nguyenthanhchung.carop2p;
+package com.nguyenthanhchung.carop2p.model;
 
 /**
  * Created by Tran Nhut Cuong on 14/04/2018.
