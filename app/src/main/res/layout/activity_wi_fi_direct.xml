@@ -7,20 +7,21 @@
     tools:context=".activity.WiFiDirectActivity"
     android:orientation="horizontal"
     >
+
     <RelativeLayout
+        android:id="@+id/layoutGame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        tools:context="com.nguyenthanhchung.carop2p.activity.MainGameActivity"
-        android:id="@+id/layoutGame"
-        >
+        android:visibility="gone"
+        tools:context="com.nguyenthanhchung.carop2p.activity.MainGameActivity">
+
         <FrameLayout
             android:id="@+id/fragmentPlayerChinh"
             android:layout_width="117dp"
             android:layout_height="match_parent"
-            android:background="#4CAF50"
             android:layout_alignParentLeft="true"
-            >
+            android:background="#4CAF50">
 
 
         </FrameLayout>
@@ -29,8 +30,7 @@
             android:id="@+id/fragmentBoardGame"
             android:layout_width="360dp"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            >
+            android:layout_centerHorizontal="true">
 
         </FrameLayout>
 
@@ -38,9 +38,8 @@
             android:id="@+id/fragmentPlayerBan"
             android:layout_width="115dp"
             android:layout_height="match_parent"
-            android:background="#4CAF50"
             android:layout_alignParentRight="true"
-            >
+            android:background="#4CAF50">
 
         </FrameLayout>
 
@@ -50,9 +49,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp"
             android:background="@null"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
             app:srcCompat="@drawable/emo1" />
 
         <FrameLayout
@@ -60,20 +59,16 @@
             android:layout_width="227dp"
             android:layout_height="130dp"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            >
+            android:layout_centerVertical="true">
 
         </FrameLayout>
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Danh sách thiết bị"
-        android:textColor="@color/colorAccent"/>
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        />
 
 </LinearLayout>

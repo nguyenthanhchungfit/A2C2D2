@@ -35,13 +35,13 @@ public class PackageData {
     }
 
     public void parse(String text){
-        String[] listItem = text.split("|");
+        String[] listItem = text.split(";");
         type = TypePackage.fromString(listItem[0]);
         msg = listItem[1];
     }
 
     @Override
     public String toString(){
-        return type.toString() + "|" + msg;
+        return type.toString() + ";" + msg;
     }
 }

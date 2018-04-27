@@ -121,7 +121,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         opponentsName="Opponent";
 
         layoutGame = findViewById(R.id.layoutGame);
-        layoutGame.setVisibility(RelativeLayout.INVISIBLE);
+        layoutGame.setVisibility(RelativeLayout.GONE);
         //this.Show();
 
     }
@@ -290,7 +290,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         PackageData packageData = new PackageData(msg);
         if(packageData.getType() == TypePackage.EMOTI){
             Integer idImage = Integer.parseInt(packageData.getMsg());
-            mainPlayerFragment.setImgPlayerAVT(idImage);
+                mainPlayerFragment.onImageFromMainToFrag("avatar", idImage);
         }else{
 
         }
@@ -362,7 +362,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
                 Integer idImage = Integer.parseInt(strValue);
                 PackageData packageData = new PackageData(TypePackage.EMOTI,idImage.toString());
                 sendMsg(packageData.toString());
-                mainPlayerFragment.onImageFromMainToFrag("avatar", idImage);
+                friendPlayerFragment.onImageFromMainToFrag("avatar", idImage);
             }catch (Exception e){
                 e.printStackTrace();
             }
