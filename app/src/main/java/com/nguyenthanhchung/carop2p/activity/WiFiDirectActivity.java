@@ -3,6 +3,7 @@ package com.nguyenthanhchung.carop2p.activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -58,6 +59,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     boolean isOpenedEmotionBoard = false;
 
     RelativeLayout layoutGame;
+    MediaPlayer background_song;
 
 
     @Override
@@ -113,8 +115,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         opponentsName="Opponent";
 
         layoutGame = findViewById(R.id.layoutGame);
-        //layoutGame.setVisibility(RelativeLayout.INVISIBLE);
-        this.Show();
+        layoutGame.setVisibility(RelativeLayout.INVISIBLE);
+        //this.Show();
 
     }
 
@@ -222,7 +224,17 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     }
 
     @Override
+    protected  void onResume(){
+        background_song = MediaPlayer.create(WiFiDirectActivity.this, R.raw.playgame_sound);
+        background_song.setLooping(true);
+        background_song.start();
+        super.onResume();
+    }
+
+    @Override
     protected void onPause() {
+        background_song.stop();
+        background_song.release();
         super.onPause();
         //unregisterWifiReceiver();
     }
@@ -268,16 +280,25 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
      * Nhận dữ liệu từ game để xử lí tác vụ game
      **/
     public void handleIncoming(String msg){
-        int x,y;
         Log.d(TAG, "Incoming " + msg);
-        if(msg.equals("RESET")){
-            //resetCanvasBoard();
-        }else if (msg.equals("LEFT")) {
-            onBackPressed();
+        PackageData packageData = new PackageData(msg);
+        if(packageData.getType() == TypePackage.EMOTI){
+            Integer idImage = Integer.parseInt(packageData.getMsg());
+            mainPlayerFragment.setImgPlayerAVT(idImage);
+        }else{
+
         }
-        else{
-            //Sử lý dữ liệu dựa trên msg
-        }
+//
+//        if(msg.equals("RESET")){
+//            //resetCanvasBoard();
+//        }else if (msg.equals("LEFT")) {
+//            onBackPressed();
+//        }
+//        else{
+//            //Sử lý dữ liệu dựa trên msg
+//        }
+
+
     }
 
     /*Đóng show listView danh sách các thiết bị*/
@@ -332,16 +353,16 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             }
         }else if(sender.equals("GameBoardImage")){
             try{
-                int idImage = Integer.parseInt(strValue);
+                Integer idImage = Integer.parseInt(strValue);
+                PackageData packageData = new PackageData(TypePackage.EMOTI,idImage.toString());
+                sendMsg(packageData.toString());
                 mainPlayerFragment.onImageFromMainToFrag("avatar", idImage);
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
         else if(sender.equals("GameBoard")){
-            PackageData packageData = new PackageData();
-            packageData.type = TypePackage.TURN;
-            packageData.msg = strValue;
+            PackageData packageData = new PackageData(TypePackage.TURN,strValue);
             sendMsg(packageData.toString());
         }
     }

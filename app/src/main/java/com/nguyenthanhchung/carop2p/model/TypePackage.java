@@ -5,8 +5,8 @@ public enum TypePackage {
     ERROR("ERROR", 0),
     START("START", 1),
     END("END", 2),
-    TURN("TURN", 3);
-
+    TURN("TURN", 3),
+    EMOTI("EMOTI", 4);
 
     private String stringValue;
     private int intValue;

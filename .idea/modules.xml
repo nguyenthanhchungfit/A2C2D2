@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://D:\D\Project AndroidStudio\AndroidTH2015\CaroP2P\A2C2D2.iml" filepath="D:\D\Project AndroidStudio\AndroidTH2015\CaroP2P\A2C2D2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CaroP2P.iml" filepath="$PROJECT_DIR$/CaroP2P.iml" />
+      <module fileurl="file://$PROJECT_DIR$/A2C2D2.iml" filepath="$PROJECT_DIR$/A2C2D2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

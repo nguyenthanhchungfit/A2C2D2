@@ -27,18 +27,27 @@ public class MainGameActivity extends AppCompatActivity implements MainGameActiv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main_game);
-        background_song = MediaPlayer.create(MainGameActivity.this,R.raw.playgame_sound);
-        background_song.setLooping(true);
-        turnOnBackGroundSong();
+
+//        background_song = MediaPlayer.create(MainGameActivity.this,R.raw.playgame_sound);
+//        background_song.setLooping(true);
+//        turnOnBackGroundSong();
         addControls();
         addEvents();
     }
     @Override
     protected void onPause() {
-        super.onPause();
+        background_song.stop();
         background_song.release();
+        super.onPause();
+    }
+
+    @Override
+    protected  void onResume(){
+        background_song = MediaPlayer.create(MainGameActivity.this, R.raw.playgame_sound);
+        background_song.setLooping(true);
+        background_song.start();
+        super.onResume();
     }
 
     @Override
@@ -107,9 +116,9 @@ public class MainGameActivity extends AppCompatActivity implements MainGameActiv
         fragmentTransaction.hide(emotionBoardFragmet);
         fragmentTransaction.commit();
     }
-    public void turnOnBackGroundSong(){
-        background_song.start();
-    }
+//    public void turnOnBackGroundSong(){
+//        background_song.start();
+//    }
 
     public void turnOffBackGroundSong(View v){
         if(background_song.isPlaying()){

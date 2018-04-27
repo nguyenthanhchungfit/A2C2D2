@@ -36,7 +36,6 @@ public class Game extends AsyncTask<String,String,String>{
     private String message;
     private WiFiDirectActivity mActivity;
 
-    //private LanPlayer localPlayer;
 
     @Override
     protected String doInBackground(String... params) {
@@ -120,6 +119,7 @@ public class Game extends AsyncTask<String,String,String>{
         super.onProgressUpdate(values);
         Log.d(LOG_TAG,"Progress update");
         //Nhận dữ liệu từ thiết bị khác và truyền cho mActivity để xử lí trên giao diện
+        //Xử lí bằng gói bằng PackageData
         mActivity.handleIncoming(values[0]);
     }
 

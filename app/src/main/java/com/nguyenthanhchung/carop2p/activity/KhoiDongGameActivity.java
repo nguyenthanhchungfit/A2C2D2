@@ -19,10 +19,11 @@ public class KhoiDongGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_khoi_dong_game);
-        background_song = MediaPlayer.create(KhoiDongGameActivity.this,R.raw.background_sound);
-        background_song.setLooping(true);
+        //background_song = MediaPlayer.create(KhoiDongGameActivity.this,R.raw.background_sound);
+        //background_song.setLooping(true);
         button_click_sound = MediaPlayer.create(KhoiDongGameActivity.this,R.raw.button_click);
-        turnOnBackGroundSong();
+        button_click_sound.setLooping(false);
+        //turnOnBackGroundSong();
 
         //Init button
         btnPlay = findViewById(R.id.btnPlay);
@@ -37,23 +38,33 @@ public class KhoiDongGameActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onPause() {
+        background_song.stop();
         background_song.release();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        background_song = MediaPlayer.create(KhoiDongGameActivity.this, R.raw.background_sound);
+        background_song.setLooping(true);
+        background_song.start();
+        super.onResume();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(background_song.isPlaying()==false){
-            background_song.start();
-        }
+//        if(background_song.isPlaying()==false){
+//            background_song.start();
+//        }
     }
 
-    public void turnOnBackGroundSong(){
-        background_song.start();
-    }
+//    public void turnOnBackGroundSong(){
+//        background_song.start();
+//    }
 
     public void turnOffBackGroundSong(View v){
         if(background_song.isPlaying()){
