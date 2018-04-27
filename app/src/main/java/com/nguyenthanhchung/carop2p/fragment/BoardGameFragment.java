@@ -47,9 +47,11 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks, Ma
                 if(type.equals("X")){
                     cell.setIdImage(R.drawable.ic_x);
                     flag = false;
+                    main.onMsgFromFragmentToMainGame("GameBoardX", ((Integer)pos).toString());
                 }else if (type.equals("O")){
                     cell.setIdImage(R.drawable.ic_o);
                     flag = true;
+                    main.onMsgFromFragmentToMainGame("GameBoardO", ((Integer)pos).toString());
                 }
                 cell.setFilled(true);
             }
