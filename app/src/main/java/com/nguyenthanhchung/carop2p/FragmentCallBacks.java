@@ -5,5 +5,5 @@ package com.nguyenthanhchung.carop2p;
  */
 
 public interface FragmentCallBacks {
-    public void onMsgFromFragToMain(String strValue);
+    public void onMsgFromMainToFrag(String strValue);
 }

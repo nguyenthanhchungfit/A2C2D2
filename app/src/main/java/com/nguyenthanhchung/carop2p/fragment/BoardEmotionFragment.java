@@ -19,6 +19,7 @@ import com.nguyenthanhchung.carop2p.activity.MainGameActivity;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
 import com.nguyenthanhchung.carop2p.adapter.ImageEmotionAdapter;
+import com.nguyenthanhchung.carop2p.callback_interface.FragmentImageCallback;
 import com.nguyenthanhchung.carop2p.model.ImageEmotion;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
             context = getActivity();
             main = (WiFiDirectActivity)getActivity();
         }catch (IllegalStateException e){
-            throw  new IllegalStateException("Main game must implements Callback");
+            throw  new IllegalStateException("Main game must implement Callback");
         }
     }
 
@@ -69,15 +70,16 @@ public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
         gvBoardEmotion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String pos = ((Integer)position).toString();
-                Toast.makeText(main, pos, Toast.LENGTH_SHORT).show();
+                int idImage = listEmotion.get(position).getIdImage();
+                String pos = ((Integer)idImage).toString();
+                main.onMsgFromFragmentToMainGame("GameBoardImage", pos);
             }
         });
 
         btnCloseEmotionBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                main.onMsgFromFragmentToMainGame("EmotionBoard", "close");
+                main.onMsgFromFragmentToMainGame("EmotionBoardClose", "close");
             }
         });
         return layout;
@@ -118,7 +120,7 @@ public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
     }
 
     @Override
-    public void onMsgFromFragToMain(String strValue) {
+    public void onMsgFromMainToFrag(String strValue) {
 
     }
 }

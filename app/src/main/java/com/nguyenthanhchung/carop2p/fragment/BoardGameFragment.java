@@ -94,7 +94,7 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks {
 
 
     @Override
-    public void onMsgFromFragToMain(String strValue) {
+    public void onMsgFromMainToFrag(String strValue) {
 
     }
 }

@@ -24,6 +24,7 @@ import com.nguyenthanhchung.carop2p.MainGameActivityCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.fragment.BoardEmotionFragment;
 import com.nguyenthanhchung.carop2p.fragment.BoardGameFragment;
+import com.nguyenthanhchung.carop2p.fragment.PlayerFragment;
 import com.nguyenthanhchung.carop2p.handler.ActionListenerHandler;
 import com.nguyenthanhchung.carop2p.handler.WiFiDirectReceiver;
 import com.nguyenthanhchung.carop2p.model.PackageData;
@@ -52,6 +53,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     FragmentTransaction fragmentTransaction;
     BoardGameFragment boardGameFragment;
     BoardEmotionFragment emotionBoardFragmet;
+    PlayerFragment mainPlayerFragment, friendPlayerFragment;
     ImageButton btnOpenEmotionBoard;
     boolean isOpenedEmotionBoard = false;
 
@@ -111,8 +113,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         opponentsName="Opponent";
 
         layoutGame = findViewById(R.id.layoutGame);
-        layoutGame.setVisibility(RelativeLayout.INVISIBLE);
-        //this.Show();
+        //layoutGame.setVisibility(RelativeLayout.INVISIBLE);
+        this.Show();
 
     }
 
@@ -140,8 +142,6 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         });
     }
 
-
-
     private void addControls() {
 
         btnOpenEmotionBoard = findViewById(R.id.btnOpenEmotionBoard);
@@ -157,6 +157,22 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         emotionBoardFragmet = BoardEmotionFragment.newInstance("EmotionBoard");
         fragmentTransaction.replace(R.id.fragmentEmotionBoard, emotionBoardFragmet);
         fragmentTransaction.hide(emotionBoardFragmet);
+        fragmentTransaction.commit();
+
+        // add fragment main player
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        mainPlayerFragment = PlayerFragment.newInstance("MainPlayer");
+        fragmentTransaction.replace(R.id.fragmentPlayerChinh, mainPlayerFragment);
+        mainPlayerFragment.setImgPlayerSign(R.drawable.ic_x);
+        mainPlayerFragment.setPlayName("Facebook");
+        fragmentTransaction.commit();
+
+        // add fragment second player
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        friendPlayerFragment = PlayerFragment.newInstance("FriendPlayer");
+        fragmentTransaction.replace(R.id.fragmentPlayerBan, friendPlayerFragment);
+        friendPlayerFragment.setImgPlayerSign(R.drawable.ic_o);
+        friendPlayerFragment.setPlayName("Google");
         fragmentTransaction.commit();
     }
 
@@ -269,6 +285,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         //deviceListView.setVisibility(View.INVISIBLE);
         layoutGame.setVisibility(RelativeLayout.VISIBLE);
         addControls();
+        addEvents();
     }
 
     public void Hide(){
@@ -306,14 +323,22 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     public void onMsgFromFragmentToMainGame(String sender, String strValue) {
         Log.d(TAG,"From: " + sender + " - Value: " + strValue);
         if(sender == null || strValue == null) return;
-        if(sender.equals("EmotionBoard")){
+        if(sender.equals("EmotionBoardClose")){
             if(strValue.equals("close")){
                 if(isOpenedEmotionBoard){
                     hideEmotionBoard();
                     isOpenedEmotionBoard = false;
                 }
             }
-        }else if(sender.equals("GameBoard")){
+        }else if(sender.equals("GameBoardImage")){
+            try{
+                int idImage = Integer.parseInt(strValue);
+                mainPlayerFragment.onImageFromMainToFrag("avatar", idImage);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else if(sender.equals("GameBoard")){
             PackageData packageData = new PackageData();
             packageData.type = TypePackage.TURN;
             packageData.msg = strValue;

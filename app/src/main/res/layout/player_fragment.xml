@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat android:layout_height="match_parent"
+<LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background_player"
@@ -19,10 +19,11 @@
             android:src="@drawable/khung_player" />
 
         <ImageView
+            android:id="@+id/imgPlayerAVT"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:src="@drawable/image_player2" />
+            android:src="@drawable/image_player1" />
     </FrameLayout>
 
     <FrameLayout
@@ -38,25 +39,21 @@
             android:src="@drawable/khungten_player"/>
 
         <TextView
-            android:layout_width="70dp"
+            android:id="@+id/txtPlayerName"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Tên người chơi"
             android:layout_gravity="center"
-            android:textSize="10sp"
-            android:textStyle="bold"/>
+            android:text="Player"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:textStyle="bold" />
     </FrameLayout>
 
     <ImageView
-        android:layout_weight="1"
+        android:id="@+id/imgPlayerSign"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:src="@drawable/dau_o_player"/>
-
-    <ImageView
+        android:layout_height="20dp"
         android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/tim_player"/>
+        android:src="@drawable/dau_x_player" />
 
-</android.support.v7.widget.LinearLayoutCompat>
+</LinearLayout>
