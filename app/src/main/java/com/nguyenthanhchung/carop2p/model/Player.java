@@ -8,13 +8,24 @@ public class Player {
     private boolean BanCo[][];
     private int SoCot = 15;
     private int SoHang = 15;
+    private boolean id;
 
     public Player(){
         BanCo = new boolean[SoHang][SoCot];
-        for(int i = 0; i < SoHang; ++i)
-            for(int j = 0; j < SoCot; ++j){
+        for(int i = 0; i < SoHang; ++i) {
+            for (int j = 0; j < SoCot; ++j) {
                 BanCo[i][j] = false;
             }
+        }
+        id = false;
+    }
+
+    public boolean getId() {
+        return id;
+    }
+
+    public void setId(boolean id) {
+        this.id = id;
     }
 
     // Hàm reset bàn cờ
@@ -74,4 +85,6 @@ public class Player {
             }
         return false;
     }
+
+
 }

@@ -180,6 +180,11 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         friendPlayerFragment.setImgPlayerSign(R.drawable.ic_o);
         friendPlayerFragment.setPlayName("Google");
         fragmentTransaction.commit();
+
+
+        mainPlayer.setId(true);
+        secondPlayer.setId(false);
+        boardGameFragment.onFromMainToFragmentStatePlayer("state", mainPlayer.getId());
     }
 
 
