@@ -76,10 +76,12 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks {
                         check_click.start();
                         m_img.setIdImage(R.drawable.ic_x);
                         flag = false;
+                        main.onMsgFromFragmentToMainGame("GameBoardX", ((Integer)position).toString());
                     }else{  // o
                         check_click.start();
                         m_img.setIdImage(R.drawable.ic_o);
                         flag = true;
+                        main.onMsgFromFragmentToMainGame("GameBoardO", ((Integer)position).toString());
                     }
                     adapter.notifyDataSetChanged();
                     main.onMsgFromFragmentToMainGame("GameBoard", ((Integer)position).toString());
