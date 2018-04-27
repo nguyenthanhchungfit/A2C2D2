@@ -18,6 +18,7 @@ import com.nguyenthanhchung.carop2p.activity.MainGameActivity;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
 import com.nguyenthanhchung.carop2p.adapter.ImageCellAdapter;
+import com.nguyenthanhchung.carop2p.image_resource.ImageProvider;
 import com.nguyenthanhchung.carop2p.model.CellBoard;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks {
     Context context = null;
     GridView gvBoard;
     ImageCellAdapter adapter;
-    final int MAX_CELLS = 225;
+    //final int MAX_CELLS = 225;
     ArrayList<CellBoard> listImage;
     MediaPlayer check_click;
     boolean flag = false;
@@ -62,10 +63,7 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks {
                 null);
         gvBoard = layout.findViewById(R.id.gvBoard);
         check_click = MediaPlayer.create(getActivity().getApplicationContext(),R.raw.pop);
-        listImage = new ArrayList<>();
-        for(int i =0; i< MAX_CELLS; i++){
-            listImage.add(new CellBoard(R.drawable.ic_empty_cell, false));
-        }
+        listImage = ImageProvider.getCELL_IMAGE_LIST();
         adapter = new ImageCellAdapter(main, R.layout.layout_adapter_gv_cell, listImage);
         gvBoard.setAdapter(adapter);
         gvBoard.setOnItemClickListener(new AdapterView.OnItemClickListener() {

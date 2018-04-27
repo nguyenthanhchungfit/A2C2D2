@@ -20,6 +20,7 @@ import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
 import com.nguyenthanhchung.carop2p.adapter.ImageEmotionAdapter;
 import com.nguyenthanhchung.carop2p.callback_interface.FragmentImageCallback;
+import com.nguyenthanhchung.carop2p.image_resource.ImageProvider;
 import com.nguyenthanhchung.carop2p.model.ImageEmotion;
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
                 R.layout.layout_board_emotion_fragment, null);
         btnCloseEmotionBoard = layout.findViewById(R.id.btnCloseEmotionBoard);
         gvBoardEmotion = layout.findViewById(R.id.gvBoardEmotion);
-        initListImageEmotion();
+        listEmotion = ImageProvider.getEMOTION_IMAGE_LIST();
         adapter = new ImageEmotionAdapter(main, R.layout.layout_adapter_gv_emotion, listEmotion);
         gvBoardEmotion.setAdapter(adapter);
 
@@ -83,40 +84,6 @@ public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
             }
         });
         return layout;
-    }
-
-    private void initListImageEmotion() {
-        listEmotion = new ArrayList<>();
-        listEmotion.add(new ImageEmotion(R.drawable.emo1));
-        listEmotion.add(new ImageEmotion(R.drawable.emo2));
-        listEmotion.add(new ImageEmotion(R.drawable.emo3));
-        listEmotion.add(new ImageEmotion(R.drawable.emo4));
-        listEmotion.add(new ImageEmotion(R.drawable.emo5));
-        listEmotion.add(new ImageEmotion(R.drawable.emo6));
-        listEmotion.add(new ImageEmotion(R.drawable.emo7));
-        listEmotion.add(new ImageEmotion(R.drawable.emo8));
-        listEmotion.add(new ImageEmotion(R.drawable.emo9));
-        listEmotion.add(new ImageEmotion(R.drawable.emo10));
-        listEmotion.add(new ImageEmotion(R.drawable.emo11));
-        listEmotion.add(new ImageEmotion(R.drawable.emo12));
-        listEmotion.add(new ImageEmotion(R.drawable.emo13));
-        listEmotion.add(new ImageEmotion(R.drawable.emo14));
-        listEmotion.add(new ImageEmotion(R.drawable.emo15));
-        listEmotion.add(new ImageEmotion(R.drawable.emo16));
-        listEmotion.add(new ImageEmotion(R.drawable.emo17));
-        listEmotion.add(new ImageEmotion(R.drawable.emo18));
-        listEmotion.add(new ImageEmotion(R.drawable.emo19));
-        listEmotion.add(new ImageEmotion(R.drawable.emo20));
-        listEmotion.add(new ImageEmotion(R.drawable.emo21));
-        listEmotion.add(new ImageEmotion(R.drawable.emo22));
-        listEmotion.add(new ImageEmotion(R.drawable.emo23));
-        listEmotion.add(new ImageEmotion(R.drawable.emo24));
-        listEmotion.add(new ImageEmotion(R.drawable.emo25));
-        listEmotion.add(new ImageEmotion(R.drawable.emo26));
-        listEmotion.add(new ImageEmotion(R.drawable.emo27));
-        listEmotion.add(new ImageEmotion(R.drawable.emo28));
-        listEmotion.add(new ImageEmotion(R.drawable.emo29));
-        listEmotion.add(new ImageEmotion(R.drawable.emo30));
     }
 
     @Override
