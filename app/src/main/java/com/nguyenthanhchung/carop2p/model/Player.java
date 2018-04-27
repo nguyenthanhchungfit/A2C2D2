@@ -6,17 +6,15 @@ package com.nguyenthanhchung.carop2p.model;
 
 public class Player {
     private boolean BanCo[][];
-    private int SoCot;
-    private int SoHang;
+    private int SoCot = 15;
+    private int SoHang = 15;
 
-    public Player(int soCot, int soHang){
-        BanCo = new boolean[soHang][soCot];
-        for(int i = 0; i < soHang; ++i)
-            for(int j = 0; j < soCot; ++j){
+    public Player(){
+        BanCo = new boolean[SoHang][SoCot];
+        for(int i = 0; i < SoHang; ++i)
+            for(int j = 0; j < SoCot; ++j){
                 BanCo[i][j] = false;
             }
-        SoCot = soCot;
-        SoHang = soHang;
     }
 
     // Hàm reset bàn cờ
@@ -27,7 +25,7 @@ public class Player {
             }
     }
 
-    boolean SetOCo(int position)
+    public boolean SetOCo(int position)
     {
         int toaDoY = position/SoCot;
         int toaDoX = position%SoCot;

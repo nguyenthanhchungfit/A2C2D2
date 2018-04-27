@@ -28,6 +28,7 @@ import com.nguyenthanhchung.carop2p.fragment.PlayerFragment;
 import com.nguyenthanhchung.carop2p.handler.ActionListenerHandler;
 import com.nguyenthanhchung.carop2p.handler.WiFiDirectReceiver;
 import com.nguyenthanhchung.carop2p.model.PackageData;
+import com.nguyenthanhchung.carop2p.model.Player;
 import com.nguyenthanhchung.carop2p.model.TypePackage;
 
 import java.util.ArrayList;
@@ -58,6 +59,11 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     boolean isOpenedEmotionBoard = false;
 
     RelativeLayout layoutGame;
+
+
+    // Player
+    final Player mainPlayer = new Player(); // Người chơi hiện tại của máy
+    final Player secondPlayer = new Player();   // Người chơi với mình
 
 
     @Override
@@ -343,6 +349,19 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             packageData.type = TypePackage.TURN;
             packageData.msg = strValue;
             sendMsg(packageData.toString());
+        }
+        else if(sender.equals("GameBoardX")){
+            mainPlayer.SetOCo(Integer.parseInt(strValue));
+            if(mainPlayer.KiemTraKetThuc()){
+                // Xu ly minh thang
+                Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
+            }
+        }else if(sender.equals("GameBoardO")){
+            secondPlayer.SetOCo(Integer.parseInt(strValue));
+            if(secondPlayer.KiemTraKetThuc()){
+                // Xu ly nguoi choi vs minh thang
+                Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
