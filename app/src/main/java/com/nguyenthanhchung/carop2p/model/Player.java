@@ -5,15 +5,15 @@ package com.nguyenthanhchung.carop2p.model;
  */
 
 public class Player {
-    private int BanCo[][];
+    private boolean BanCo[][];
     private int SoCot;
     private int SoHang;
 
     public Player(int soCot, int soHang){
-        BanCo = new int[soHang][soCot];
-        for(int i = 0; i < SoHang; ++i)
-            for(int j = 0; j < SoCot; ++j){
-                BanCo[i][j] = 0;
+        BanCo = new boolean[soHang][soCot];
+        for(int i = 0; i < soHang; ++i)
+            for(int j = 0; j < soCot; ++j){
+                BanCo[i][j] = false;
             }
         SoCot = soCot;
         SoHang = soHang;
@@ -23,23 +23,18 @@ public class Player {
     public void TaoLaiBanCo(){
         for(int i = 0; i < SoHang; ++i)
             for(int j = 0; j < SoCot; ++j){
-                BanCo[i][j] = 0;
+                BanCo[i][j] = false;
             }
     }
 
-    /* Hàm đánh 1 quân cờ vào bàn cờ: vitriX, vitriY: Tọa độ
-                                      NguoiChoi(1: Người chơi 1, 2: Người chơi 2) */
-    public boolean DanhCo(int vitriX, int vitriY, int NguoiChoi){
-
-        // False: đã có quân cờ; tọa độ truyền vào sai
-        if(BanCo[vitriX][vitriY] != 0 || KiemTraTrongBanCo(vitriX, vitriY)==false)
+    boolean SetOCo(int position)
+    {
+        int toaDoY = position/SoCot;
+        int toaDoX = position%SoCot;
+        if(KiemTraTrongBanCo(toaDoX, toaDoY)==false)
             return false;
-        else{
-            if(NguoiChoi == 1)
-                BanCo[vitriX][vitriY] = 1;
-            else if(NguoiChoi == 2)
-                BanCo[vitriX][vitriY] = 2;
-        }
+        else
+            BanCo[toaDoX][toaDoY] = true;
         return true;
     }
 
@@ -50,10 +45,9 @@ public class Player {
         return false;
     }
 
-    /* Kiểm tra kết thúc: trả về 0: chưa kết thúc;
-                                 1: người chơi 1 thắng;
-                                 2: người chơi 2 thắng  */
-    public int KiemTraKetThuc(){
+    /* Kiểm tra kết thúc: trả về false: chưa kết thúc;
+                                 true: kết thúc; */
+    public boolean KiemTraKetThuc(){
         int i, j, k;
         int[] dx =  { 1, 1, 1, 0 };
         int[] dy =  { -1, 0, 1, 1 };
@@ -61,29 +55,25 @@ public class Player {
         for (i = 0; i < SoHang; i++)
             for (j = 0; j < SoCot; j++)
             {
-                if (BanCo[i][j] != 0)
+                if (BanCo[i][j]==true)
                 {
                     for (k = 0; k < 4; k++)
                     {
                         int count = 0, x = i, y = j;
-                        while (count < 5 && this.KiemTraTrongBanCo(x, y) && BanCo[x][y] == BanCo[i][j])
+                        while (count < 5 && this.KiemTraTrongBanCo(x, y) && BanCo[x][y] == true)
                         {
                             count++;
                             x += dx[k];
                             y += dy[k];
                         }
 
-                        if (count == 5 && BanCo[i][j]==1)
+                        if (count == 5)
                         {
-                            return 1;
-                        }
-                        else if(count == 5 && BanCo[i][j]==2)
-                        {
-                            return 2;
+                            return true;
                         }
                     }
                 }
             }
-        return 0;
+        return false;
     }
 }
