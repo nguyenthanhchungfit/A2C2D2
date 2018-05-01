@@ -58,6 +58,19 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks, Ma
         }
     }
 
+    // Hàm này set mặc định bàn cờ về rỗng
+    public void resetCellBoard(){
+        int size = listImage.size();
+        for(int i =0; i< size; i++){
+            CellBoard cell = listImage.get(i);
+            if(cell.isFilled()){
+                cell.setFilled(false);
+                cell.setIdImage(R.drawable.ic_empty_cell);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
     public static BoardGameFragment newInstance(String strArgs){
         BoardGameFragment fragment = new BoardGameFragment();
         Bundle args = new Bundle();

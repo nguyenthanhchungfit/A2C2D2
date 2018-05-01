@@ -4,6 +4,7 @@ import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.model.CellBoard;
 import com.nguyenthanhchung.carop2p.model.ImageEmotion;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -56,10 +57,47 @@ public class ImageProvider {
         }
     }
 
+    private static ArrayList<ImageEmotion> EMOTION_128_IMAGE_LIST;
+    private static void initEMOTION_128_IMAGE_LIST(){
+        EMOTION_128_IMAGE_LIST = new ArrayList<>();
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_1));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_2));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_3));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_4));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_5));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_6));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_7));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_8));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_9));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_10));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_11));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_12));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_13));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_14));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_15));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_16));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_17));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_18));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_19));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_20));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_21));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_22));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_23));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_24));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_25));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_26));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_27));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_28));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_29));
+        EMOTION_128_IMAGE_LIST.add(new ImageEmotion(R.drawable.emo_128_30));
+    }
+
     static{
         initEMOTION_IMAGE_LIST();
 
         initCELL_BOARD_IMAGE_LIST();
+
+        initEMOTION_128_IMAGE_LIST();
     }
 
     public static ArrayList<ImageEmotion> getEMOTION_IMAGE_LIST(){
@@ -68,5 +106,9 @@ public class ImageProvider {
 
     public static ArrayList<CellBoard> getCELL_IMAGE_LIST(){
         return CELL_BOARD_IMAGE_LIST;
+    }
+
+    public static ArrayList<ImageEmotion> getEMOTION_128_IMAGE_LIST(){
+        return EMOTION_128_IMAGE_LIST;
     }
 }
