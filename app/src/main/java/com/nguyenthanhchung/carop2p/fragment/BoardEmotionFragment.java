@@ -35,6 +35,7 @@ public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
     GridView gvBoardEmotion;
     ImageEmotionAdapter adapter;
     ArrayList<ImageEmotion> listEmotion;
+    ArrayList<ImageEmotion> listEmotion128;
     ImageButton btnCloseEmotionBoard;
 
     public static BoardEmotionFragment newInstance(String strArgs){
@@ -64,6 +65,7 @@ public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
         btnCloseEmotionBoard = layout.findViewById(R.id.btnCloseEmotionBoard);
         gvBoardEmotion = layout.findViewById(R.id.gvBoardEmotion);
         listEmotion = ImageProvider.getEMOTION_IMAGE_LIST();
+        listEmotion128 = ImageProvider.getEMOTION_128_IMAGE_LIST();
         adapter = new ImageEmotionAdapter(main, R.layout.layout_adapter_gv_emotion, listEmotion);
         gvBoardEmotion.setAdapter(adapter);
 
@@ -71,7 +73,7 @@ public class BoardEmotionFragment extends Fragment implements FragmentCallBacks{
         gvBoardEmotion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int idImage = listEmotion.get(position).getIdImage();
+                int idImage = listEmotion128.get(position).getIdImage();
                 String pos = ((Integer)idImage).toString();
                 main.onMsgFromFragmentToMainGame("GameBoardImage", pos);
             }
