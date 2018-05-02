@@ -72,6 +72,9 @@ public class Game extends AsyncTask<String,String,String>{
         }finally {
             try {
                 socket.close();
+                //Lỗi kết nối
+                //Cần show hiển thị ở đây
+                //mActivity.onBackPressed();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -107,6 +110,9 @@ public class Game extends AsyncTask<String,String,String>{
         } finally {
             try {
                 socket.close();
+                //Lỗi kết nối
+                //Cần show hiển thị ở đây
+                //mActivity.onBackPressed();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -147,5 +153,14 @@ public class Game extends AsyncTask<String,String,String>{
         writer.println(message);
     }
 
+    public void Close(){
+        if(!socket.isClosed()){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

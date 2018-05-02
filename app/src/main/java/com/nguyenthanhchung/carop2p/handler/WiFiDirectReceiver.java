@@ -134,17 +134,23 @@ public class WiFiDirectReceiver extends BroadcastReceiver implements WifiP2pMana
     public void unregisterReceiver() {
         Log.d(TAG,"Unregistering Receiver");
         mActivity.unregisterReceiver(this);
-        if(game!=null) game.cancel(true);
+        if(game!=null) {
+            game.Close();
+            game.cancel(true);
+        }
     }
 
     @Override
     public void onConnectionInfoAvailable(final WifiP2pInfo wifiP2pInfo) {
         Log.d(TAG, "Connection Established");
+        boolean isHost = false;
         if (wifiP2pInfo.groupFormed) {
             // mActivity.setPlayers();
             if (wifiP2pInfo.isGroupOwner) {
                 //server side
                 game = new Game(mActivity);
+                isHost = true;
+
             } else {
                 //client side
                 game = new Game(mActivity,wifiP2pInfo.groupOwnerAddress);
@@ -152,6 +158,7 @@ public class WiFiDirectReceiver extends BroadcastReceiver implements WifiP2pMana
             game.execute();
             //game.sendMsg("Start");
             mActivity.Show();
+            mActivity.setPlayers(isHost);
         }else{
             Log.d(TAG,"Failed to form group");
         }

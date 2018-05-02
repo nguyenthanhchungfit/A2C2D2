@@ -41,19 +41,21 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks, Ma
     private boolean state_player = false;
 
     public void setCellBoard(String type, int pos){
+        check_click = MediaPlayer.create(getActivity().getApplicationContext(),R.raw.pop);
         CellBoard cell = listImage.get(pos);
         if(cell != null){
             if(cell.isFilled() == false){
                 if(type.equals("X")){
+                    check_click.start();
                     cell.setIdImage(R.drawable.ic_x);
-                    flag = false;
-                    main.onMsgFromFragmentToMainGame("GameBoardX", ((Integer)pos).toString());
                 }else if (type.equals("O")){
+                    check_click.start();
                     cell.setIdImage(R.drawable.ic_o);
-                    flag = true;
-                    main.onMsgFromFragmentToMainGame("GameBoardO", ((Integer)pos).toString());
                 }
+                flag = !flag;
                 cell.setFilled(true);
+                adapter.notifyDataSetChanged();
+                main.onMsgFromFragmentToMainGame("Check", "1");
             }
         }
     }
@@ -104,25 +106,30 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks, Ma
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(listImage.get(position).isFilled() == false){
-                    CellBoard m_img = listImage.get(position);
-                    m_img.setFilled(true);
-                    main.onMsgFromFragmentToMainGame("StatePlayer", "");
-
-                    if(flag == state_player){   // x
+                    //main.onMsgFromFragmentToMainGame("StatePlayer", "");
+                    if(flag == state_player){ // Player
+                        CellBoard m_img = listImage.get(position);
+                        m_img.setFilled(true);
                         check_click.start();
-                        m_img.setIdImage(R.drawable.ic_x);
-                        flag = false;
-                        main.onMsgFromFragmentToMainGame("GameBoardX", ((Integer)position).toString());
-                    }else{  // o
+                        if(state_player == Boolean.TRUE){
+                            m_img.setIdImage(R.drawable.ic_x);
+                            adapter.notifyDataSetChanged();
+                            main.onMsgFromFragmentToMainGame("GameBoardX", ((Integer)position).toString());
+                        }else{
+                            m_img.setIdImage(R.drawable.ic_o);
+                            adapter.notifyDataSetChanged();
+                            main.onMsgFromFragmentToMainGame("GameBoardO", ((Integer)position).toString());
+                        }
+                        flag = !flag;
+                    }else{
                         check_click.start();
                         Toast.makeText(main, "Bạn chưa được đánh", Toast.LENGTH_SHORT).show();
-
 //                        m_img.setIdImage(R.drawable.ic_o);
 //                        flag = true;
 //                        main.onMsgFromFragmentToMainGame("GameBoardO", ((Integer)position).toString());
                     }
-                    adapter.notifyDataSetChanged();
-                    main.onMsgFromFragmentToMainGame("GameBoard", ((Integer)position).toString());
+
+                    //main.onMsgFromFragmentToMainGame("GameBoard", ((Integer)position).toString());
                 }
             }
         });

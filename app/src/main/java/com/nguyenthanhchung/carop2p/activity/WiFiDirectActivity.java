@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -183,12 +184,21 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         friendPlayerFragment.setPlayName("Google");
         fragmentTransaction.commit();
 
-
-        mainPlayer.setId(true);
-        secondPlayer.setId(false);
-        boardGameFragment.onFromMainToFragmentStatePlayer("state", mainPlayer.getId());
     }
 
+
+    public void setPlayers(boolean isHost) {
+        if (isHost) {
+            mainPlayer.setId(true);
+            secondPlayer.setId(false);
+            boardGameFragment.onFromMainToFragmentStatePlayer("state", mainPlayer.getId());
+        }else{
+            mainPlayer.setId(false);
+            secondPlayer.setId(true);
+            boardGameFragment.onFromMainToFragmentStatePlayer("state", mainPlayer.getId());
+        }
+
+    }
 
     /**
      * Tìm kiếm thiết bị có thể kết nối
@@ -240,6 +250,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         background_song.setLooping(true);
         background_song.start();
         super.onResume();
+        //registerWifiReceiver();
     }
 
     @Override
@@ -263,15 +274,32 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     @Override
     protected void onStop() {
         super.onStop();
-        sendMsg("LEFT");
+       //sendMsg("LEFT");
+        PackageData packageData = new PackageData(TypePackage.END,"1");
+        sendMsg(packageData.toString());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        mManager.requestGroupInfo(mChannel, new WifiP2pManager.GroupInfoListener() {
+            @Override
+            public void onGroupInfoAvailable(WifiP2pGroup group) {
+                if (group != null && mManager != null && mChannel != null
+                        && group.isGroupOwner()) {
+                    mManager.removeGroup(mChannel, new ActionListenerHandler(thisActivity, "Group removal"));
+                }
+            }
+        });
+        //mManager.removeGroup(mChannel, new ActionListenerHandler(this, "Group removal"));
+        mManager.cancelConnect(mChannel, new ActionListenerHandler(this, "Canceling connect"));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mManager.stopPeerDiscovery(mChannel, new ActionListenerHandler(this, "Stop Discovery"));
         }
-        mManager.removeGroup(mChannel, new ActionListenerHandler(this, "Group removal"));
-        mManager.cancelConnect(mChannel, new ActionListenerHandler(this, "Canceling connect"));
         unregisterWifiReceiver();
-        mManager=null;
+        mManager = null;
         Log.d(TAG, "WifiDirectActivity stopped");
+        this.Hide();
     }
 
 
@@ -296,6 +324,18 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         if(packageData.getType() == TypePackage.EMOTI){
             Integer idImage = Integer.parseInt(packageData.getMsg());
                 mainPlayerFragment.onImageFromMainToFrag("avatar", idImage);
+        }else if(packageData.getType() == TypePackage.TURN){
+            Integer idCell = Integer.parseInt(packageData.getMsg());
+                if(secondPlayer.getId() == Boolean.TRUE){
+                    secondPlayer.SetOCo(idCell);
+                    boardGameFragment.setCellBoard("X",idCell);
+                }else{
+                    boardGameFragment.setCellBoard("O",idCell);
+                    secondPlayer.SetOCo(idCell);
+                }
+        }else if(packageData.getType() == TypePackage.END){
+            Toast.makeText(this, "Player 2 out the game", Toast.LENGTH_SHORT).show();
+            onBackPressed();
         }else{
 
         }
@@ -321,7 +361,19 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     }
 
     public void Hide(){
-
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//            mManager.stopPeerDiscovery(mChannel, new ActionListenerHandler(this, "Stop Discovery"));
+//        }
+//        mManager.removeGroup(mChannel, new ActionListenerHandler(this, "Group removal"));
+//        mManager.cancelConnect(mChannel, new ActionListenerHandler(this, "Canceling connect"));
+//        unregisterWifiReceiver();
+//        mManager = null;
+        if(boardGameFragment != null){
+            layoutGame.setVisibility(RelativeLayout.GONE);
+            boardGameFragment.resetCellBoard();
+            mainPlayer.TaoLaiBanCo();
+            secondPlayer.TaoLaiBanCo();
+        }
     }
 
     /*Gửi msg sang thiết bị khác*/
@@ -373,20 +425,33 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             }
         }
         else if(sender.equals("GameBoard")){
+            //Test
             PackageData packageData = new PackageData(TypePackage.TURN,strValue);
             sendMsg(packageData.toString());
         }
         else if(sender.equals("GameBoardX")){
             mainPlayer.SetOCo(Integer.parseInt(strValue));
+            PackageData packageData = new PackageData(TypePackage.TURN,strValue);
+            sendMsg(packageData.toString());
             if(mainPlayer.KiemTraKetThuc()){
                 // Xu ly minh thang
                 Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
             }
         }else if(sender.equals("GameBoardO")){
-            secondPlayer.SetOCo(Integer.parseInt(strValue));
-            if(secondPlayer.KiemTraKetThuc()){
-                // Xu ly nguoi choi vs minh thang
+            mainPlayer.SetOCo(Integer.parseInt(strValue));
+            PackageData packageData = new PackageData(TypePackage.TURN,strValue);
+            sendMsg(packageData.toString());
+            if(mainPlayer.KiemTraKetThuc()){
+                // Xu ly minh thang
                 Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
+            }
+        }else if(sender.equals("Check")){
+            if(secondPlayer.KiemTraKetThuc()){
+                // Xu ly nguoi choi thang
+                if(secondPlayer.getId() == Boolean.TRUE)
+                    Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
             }
         }
     }
