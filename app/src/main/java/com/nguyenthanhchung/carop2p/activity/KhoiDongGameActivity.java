@@ -15,10 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.text.method.ScrollingMovementMethod;
 import com.nguyenthanhchung.carop2p.R;
-import com.nguyenthanhchung.carop2p.adapter.SinhVienAdapter;
+
 import com.nguyenthanhchung.carop2p.fragment.HuongDanFragment;
 import com.nguyenthanhchung.carop2p.fragment.ThucHienFragment;
-import com.nguyenthanhchung.carop2p.model.SinhVien;
+
 
 import java.util.ArrayList;
 
