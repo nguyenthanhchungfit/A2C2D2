@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,13 +51,13 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        LinearLayout layout = (LinearLayout) inflater.inflate
+        ConstraintLayout layout = (ConstraintLayout) inflater.inflate
                 (R.layout.player_fragment, null);
 
         imgPlayerAVT = layout.findViewById(R.id.imgPlayerAVT);
         imgPlayerSign = layout.findViewById(R.id.imgPlayerSign);
         txtPlayerName = layout.findViewById(R.id.txtPlayerName);
-
+        Log.d("Player", "onCreate");
         return layout;
     }
 
@@ -66,15 +68,21 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
     }
 
     public void setImgPlayerSign(int idImage){
+        Log.d("Player", "setImage");
         if(imgPlayerSign != null){
+            Log.d("Player", "setImageNull");
             imgPlayerSign.setImageResource(idImage);
         }
     }
 
     public void setPlayName(String name){
+        Log.d("Player", "setName");
         if(txtPlayerName != null){
+            Log.d("Player", "setNameNull");
             txtPlayerName.setText(name);
         }
+
+
     }
 
     @Override
@@ -88,7 +96,7 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
             setImgPlayerAVT(idImage);
             changeAVTPlayer();
 
-        }else if(obj.equals("sign")){
+        }else if(obj.equals("sign")) {
             setImgPlayerSign(idImage);
         }
     }
