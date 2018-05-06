@@ -127,6 +127,15 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
 
     }
 
+    private void ShowName(){
+        // Set Ten, Set Hinh
+        mainPlayerFragment.setImgPlayerSign(R.drawable.ic_x);
+        mainPlayerFragment.setPlayName("Facebook");
+        friendPlayerFragment.setImgPlayerSign(R.drawable.ic_o);
+        friendPlayerFragment.setPlayName("Google");
+        friendPlayerFragment.setImgPlayerAVT(R.drawable.image_player2);
+    }
+
     private void showEmotionBoard(){
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.show(emotionBoardFragmet);
@@ -172,16 +181,12 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         fragmentTransaction = getFragmentManager().beginTransaction();
         mainPlayerFragment = PlayerFragment.newInstance("MainPlayer");
         fragmentTransaction.replace(R.id.fragmentPlayerChinh, mainPlayerFragment);
-        mainPlayerFragment.setImgPlayerSign(R.drawable.ic_x);
-        mainPlayerFragment.setPlayName("Facebook");
         fragmentTransaction.commit();
 
         // add fragment second player
         fragmentTransaction = getFragmentManager().beginTransaction();
         friendPlayerFragment = PlayerFragment.newInstance("FriendPlayer");
         fragmentTransaction.replace(R.id.fragmentPlayerBan, friendPlayerFragment);
-        friendPlayerFragment.setImgPlayerSign(R.drawable.ic_o);
-        friendPlayerFragment.setPlayName("Google");
         fragmentTransaction.commit();
 
     }
@@ -269,6 +274,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         mManager.discoverPeers(mChannel, new ActionListenerHandler(this, "Discover peers"));
 
         //findViewById(R.id.helpFAB).setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -358,6 +364,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         layoutGame.setVisibility(RelativeLayout.VISIBLE);
         addControls();
         addEvents();
+        ShowName();
     }
 
     public void Hide(){

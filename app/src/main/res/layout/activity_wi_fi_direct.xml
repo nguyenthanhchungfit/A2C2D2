@@ -47,12 +47,13 @@
             android:id="@+id/btnOpenEmotionBoard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/fragmentPlayerBan"
+            android:layout_marginStart="36dp"
             android:background="@null"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            app:srcCompat="@drawable/emo1" />
+            android:paddingRight="8dp"
+            android:paddingTop="8dp"
+            app:srcCompat="@drawable/ic_open_emotion" />
 
         <FrameLayout
             android:id="@+id/fragmentEmotionBoard"

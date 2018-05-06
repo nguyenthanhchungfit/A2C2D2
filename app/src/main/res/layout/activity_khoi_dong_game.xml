@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/start_background"
+    android:id="@+id/ConstraintContent"
     tools:context="com.nguyenthanhchung.carop2p.activity.KhoiDongGameActivity">
+
 
     <Button
         android:id="@+id/btnPlay"
@@ -63,5 +65,18 @@
         app:layout_constraintStart_toEndOf="@+id/btnInfo"
         app:layout_constraintTop_toTopOf="parent"
         android:onClick="exitGame"/>
+
+    <FrameLayout
+        android:id="@+id/frameContent"
+        android:layout_width="655dp"
+        android:layout_height="354dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:foregroundGravity="top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
