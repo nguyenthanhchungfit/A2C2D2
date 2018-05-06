@@ -17,7 +17,7 @@
         tools:context="com.nguyenthanhchung.carop2p.activity.MainGameActivity">
 
         <FrameLayout
-            android:id="@+id/fragmentPlayerChinh"
+                android:id="@+id/fragmentPlayerChinh"
             android:layout_width="117dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
@@ -48,8 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/fragmentPlayerBan"
-            android:layout_marginStart="36dp"
+            android:layout_alignStart="@+id/fragmentPlayerChinh"
+            android:layout_marginStart="34dp"
             android:background="@null"
             android:paddingRight="8dp"
             android:paddingTop="8dp"
