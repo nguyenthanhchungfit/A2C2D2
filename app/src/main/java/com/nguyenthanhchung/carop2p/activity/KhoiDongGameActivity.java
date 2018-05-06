@@ -14,25 +14,31 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.text.method.ScrollingMovementMethod;
+
+import com.nguyenthanhchung.carop2p.MainGameActivityCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 
 import com.nguyenthanhchung.carop2p.fragment.HuongDanFragment;
+import com.nguyenthanhchung.carop2p.fragment.SettingFragment;
 import com.nguyenthanhchung.carop2p.fragment.ThucHienFragment;
 
 
 import java.util.ArrayList;
 
-public class KhoiDongGameActivity extends AppCompatActivity {
+public class KhoiDongGameActivity extends AppCompatActivity implements MainGameActivityCallBacks {
     MediaPlayer background_song;
     MediaPlayer button_click_sound;
     FrameLayout frameLayout;
     FragmentTransaction fragmentTransaction;
     HuongDanFragment huongDanFragment;
     ThucHienFragment thucHienFragment;
+    SettingFragment settingFragment;
+    boolean isOpenedSetting = false;
     Button btnPlay;
     Button btnGuide;
     Button btnInfo;
     Button btnExit;
+    Button btnSetting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +58,7 @@ public class KhoiDongGameActivity extends AppCompatActivity {
         btnGuide = findViewById(R.id.btnGuide);
         btnInfo = findViewById(R.id.btnInfo);
         btnExit = findViewById(R.id.btnExit);
+        btnSetting = findViewById(R.id.btnSetting);
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +141,7 @@ public class KhoiDongGameActivity extends AppCompatActivity {
         btnGuide.setVisibility(View.INVISIBLE);
         btnInfo.setVisibility(View.INVISIBLE);
         btnExit.setVisibility(View.INVISIBLE);
+        btnSetting.setVisibility(View.INVISIBLE);
         frameLayout.setVisibility(View.VISIBLE);
     }
 
@@ -143,6 +151,37 @@ public class KhoiDongGameActivity extends AppCompatActivity {
         btnGuide.setVisibility(View.VISIBLE);
         btnInfo.setVisibility(View.VISIBLE);
         btnExit.setVisibility(View.VISIBLE);
+        btnSetting.setVisibility(View.VISIBLE);
     }
 
+    public void turnOnSetting(View view) {
+        button_click_sound.start();
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        settingFragment = new SettingFragment();
+        fragmentTransaction.add(R.id.frameContent, settingFragment, "setting");
+        fragmentTransaction.commit();
+        hideBtn();
+        isOpenedSetting = true;
+    }
+    private void hideSetting(){
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        settingFragment = (SettingFragment)getFragmentManager().findFragmentByTag("setting");
+        fragmentTransaction.remove(settingFragment);
+        fragmentTransaction.commit();
+        showBtn();
+    }
+    @Override
+    public void onMsgFromFragmentToMainGame(String sender, String strValue) {
+        if(sender == null || strValue == null) return;
+        if(sender.equals("SettingFragmentClose")){
+            if(strValue.equals("close")){
+                if(isOpenedSetting){
+                    hideSetting();
+                    isOpenedSetting = false;
+                }
+            }
+        }else if(sender.equals("GameBoard")){
+
+        }
+    }
 }

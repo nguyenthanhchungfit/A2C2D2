@@ -20,20 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="296dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:paddingLeft="2dp"
-        android:paddingRight="30dp"
-        android:text="2 người chơi sẽ oẳn tù tì để giành quyền đi trước và sẽ đánh thay phiên nhau mỗi lượt. Cả 2 đều có 10s để suy nghĩ nếu hết giờ hệ thống sẽ tự đánh thay cho bạn. Khi có 1 người chơi có 5 kí hiệu liên tiếp theo hàng dọc, ngang chéo thì người chơi đó sẽ thắng và người còn lại sẽ thua với điều kiện không bị chặn 2 đầu."
-        android:textColor="#333333"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
@@ -43,5 +29,40 @@
         android:src="@android:drawable/btn_dialog"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="565dp"
+        android:layout_height="267dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="296dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="30dp"
+                android:scrollbars="vertical"
+                android:text="2 người chơi sẽ oẳn tù tì để giành quyền đi trước và sẽ đánh thay phiên nhau mỗi lượt. Cả 2 đều có 10s để suy nghĩ nếu hết giờ hệ thống sẽ tự đánh thay cho bạn. Khi có 1 người chơi có 5 kí hiệu liên tiếp theo hàng dọc, ngang chéo thì người chơi đó sẽ thắng và người còn lại sẽ thua với điều kiện không bị chặn 2 đầu."
+                android:textColor="#333333"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
