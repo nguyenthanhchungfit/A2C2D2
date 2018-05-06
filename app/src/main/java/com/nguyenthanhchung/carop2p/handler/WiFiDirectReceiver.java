@@ -15,7 +15,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.nguyenthanhchung.carop2p.Game;
+import com.nguyenthanhchung.carop2p.Helper.MySharedPreferences;
 import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
+import com.nguyenthanhchung.carop2p.model.PackageData;
+import com.nguyenthanhchung.carop2p.model.TypePackage;
 
 import java.util.ArrayList;
 

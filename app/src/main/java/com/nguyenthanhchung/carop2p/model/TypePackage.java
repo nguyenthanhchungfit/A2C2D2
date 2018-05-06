@@ -6,10 +6,12 @@ public enum TypePackage {
     START("START", 1),
     END("END", 2),
     TURN("TURN", 3),
-    EMOTI("EMOTI", 4);
+    EMOTI("EMOTI", 4),
+    NAME("NAME", 5);
 
     private String stringValue;
     private int intValue;
+
     private TypePackage(String toString, int value) {
         stringValue = toString;
         intValue = value;

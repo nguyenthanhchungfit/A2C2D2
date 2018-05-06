@@ -60,7 +60,7 @@ public class Game extends AsyncTask<String,String,String>{
             writer = new PrintWriter(socket.getOutputStream(), true);
 
             Log.d(LOG_TAG, "Server created on: " + SERVER_PORT);
-
+            mActivity.sendData();
             while(socket != null){
                 msg = reader.readLine();
                 if( msg==null || isCancelled()) break;
@@ -95,7 +95,7 @@ public class Game extends AsyncTask<String,String,String>{
             inputStream = socket.getInputStream();
             reader = new BufferedReader(new InputStreamReader(inputStream));
             writer = new PrintWriter(socket.getOutputStream(), true);
-
+            mActivity.sendData();
             while(true){
                 msg = reader.readLine();
                 if( msg == null || isCancelled() ) break;

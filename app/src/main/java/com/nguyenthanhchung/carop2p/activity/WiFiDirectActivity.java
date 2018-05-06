@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.nguyenthanhchung.carop2p.Helper.MySharedPreferences;
 import com.nguyenthanhchung.carop2p.MainGameActivityCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.fragment.BoardEmotionFragment;
@@ -129,11 +130,18 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
 
     private void ShowName(){
         // Set Ten, Set Hinh
-        mainPlayerFragment.setImgPlayerSign(R.drawable.ic_x);
-        mainPlayerFragment.setPlayName("Facebook");
-        friendPlayerFragment.setImgPlayerSign(R.drawable.ic_o);
-        friendPlayerFragment.setPlayName("Google");
-        friendPlayerFragment.setImgPlayerAVT(R.drawable.image_player2);
+        if(mainPlayer.getId() == Boolean.TRUE){
+            mainPlayerFragment.setImgPlayerSign(R.drawable.ic_x);
+            friendPlayerFragment.setImgPlayerSign(R.drawable.ic_o);
+            friendPlayerFragment.setImgPlayerAVT(R.drawable.image_player2);
+        }else{
+            mainPlayerFragment.setImgPlayerSign(R.drawable.ic_o);
+            friendPlayerFragment.setImgPlayerSign(R.drawable.ic_x);
+            friendPlayerFragment.setImgPlayerAVT(R.drawable.image_player2);
+        }
+        String name = MySharedPreferences.getStringSharedPreferences(this,"Player","name");
+        mainPlayerFragment.setPlayName(name);
+        //friendPlayerFragment.setPlayName("Google");
     }
 
     private void showEmotionBoard(){
@@ -202,7 +210,6 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             secondPlayer.setId(true);
             boardGameFragment.onFromMainToFragmentStatePlayer("state", mainPlayer.getId());
         }
-
     }
 
     /**
@@ -282,7 +289,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         super.onStop();
        //sendMsg("LEFT");
         PackageData packageData = new PackageData(TypePackage.END,"1");
-        sendMsg(packageData.toString());
+        sendMsg(packageData);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -329,7 +336,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         PackageData packageData = new PackageData(msg);
         if(packageData.getType() == TypePackage.EMOTI){
             Integer idImage = Integer.parseInt(packageData.getMsg());
-                mainPlayerFragment.onImageFromMainToFrag("avatar", idImage);
+                friendPlayerFragment.onImageFromMainToFrag("avatar", idImage);
         }else if(packageData.getType() == TypePackage.TURN){
             Integer idCell = Integer.parseInt(packageData.getMsg());
                 if(secondPlayer.getId() == Boolean.TRUE){
@@ -342,8 +349,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         }else if(packageData.getType() == TypePackage.END){
             Toast.makeText(this, "Player 2 out the game", Toast.LENGTH_SHORT).show();
             onBackPressed();
-        }else{
-
+        }else if(packageData.getType() == TypePackage.NAME){
+            friendPlayerFragment.setPlayName(packageData.getMsg());
         }
 //
 //        if(msg.equals("RESET")){
@@ -364,7 +371,11 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         layoutGame.setVisibility(RelativeLayout.VISIBLE);
         addControls();
         addEvents();
-        ShowName();
+    }
+
+    public void sendData(){
+        PackageData packageData = new PackageData(TypePackage.NAME, MySharedPreferences.getStringSharedPreferences(this,"Player","name"));
+        sendMsg(packageData);
     }
 
     public void Hide(){
@@ -384,9 +395,10 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     }
 
     /*Gửi msg sang thiết bị khác*/
-    public void sendMsg(String msg){
-        mReceiver.sendMsg(msg);
-        Log.d(TAG, "Sending move");
+    public void sendMsg(PackageData packageData){
+        Log.d(TAG, "Sending " + packageData.getType().toString() + " - Data: " + packageData.getMsg());
+        mReceiver.sendMsg(packageData.toString());
+
     }
 
     //Tạo mới channel;
@@ -425,8 +437,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             try{
                 Integer idImage = Integer.parseInt(strValue);
                 PackageData packageData = new PackageData(TypePackage.EMOTI,idImage.toString());
-                sendMsg(packageData.toString());
-                friendPlayerFragment.onImageFromMainToFrag("avatar", idImage);
+                sendMsg(packageData);
+                mainPlayerFragment.onImageFromMainToFrag("avatar", idImage);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -434,12 +446,12 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         else if(sender.equals("GameBoard")){
             //Test
             PackageData packageData = new PackageData(TypePackage.TURN,strValue);
-            sendMsg(packageData.toString());
+            sendMsg(packageData);
         }
         else if(sender.equals("GameBoardX")){
             mainPlayer.SetOCo(Integer.parseInt(strValue));
             PackageData packageData = new PackageData(TypePackage.TURN,strValue);
-            sendMsg(packageData.toString());
+            sendMsg(packageData);
             if(mainPlayer.KiemTraKetThuc()){
                 // Xu ly minh thang
                 Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
@@ -447,7 +459,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         }else if(sender.equals("GameBoardO")){
             mainPlayer.SetOCo(Integer.parseInt(strValue));
             PackageData packageData = new PackageData(TypePackage.TURN,strValue);
-            sendMsg(packageData.toString());
+            sendMsg(packageData);
             if(mainPlayer.KiemTraKetThuc()){
                 // Xu ly minh thang
                 Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
@@ -459,6 +471,10 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
                     Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
+            }
+        }else if(sender.equals("PlayerFragment")){
+            if(strValue.equals("UpdateView")){
+                ShowName();
             }
         }
     }

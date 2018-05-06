@@ -62,6 +62,12 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
         return layout;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        main.onMsgFromFragmentToMainGame("PlayerFragment","UpdateView");
+    }
+
     public void setImgPlayerAVT(int idImage){
         if(imgPlayerAVT != null){
             imgPlayerAVT.setImageResource(idImage);

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.Toast;
 
+import com.nguyenthanhchung.carop2p.Helper.MySharedPreferences;
 import com.nguyenthanhchung.carop2p.R;
 
 import com.nguyenthanhchung.carop2p.fragment.HuongDanFragment;
@@ -67,7 +68,7 @@ public class KhoiDongGameActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        MySharedPreferences.saveStringSharedPreferences(this,"Player","name","ABC");
     }
 
     @Override
