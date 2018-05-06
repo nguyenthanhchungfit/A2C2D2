@@ -36,8 +36,14 @@ public class PackageData {
 
     public void parse(String text){
         String[] listItem = text.split(";");
-        type = TypePackage.fromString(listItem[0]);
-        msg = listItem[1];
+        if(listItem.length == 1){
+            type = TypePackage.fromString(listItem[0]);
+            msg = "";
+        }
+        else{
+            type = TypePackage.fromString(listItem[0]);
+            msg = listItem[1];
+        }
     }
 
     @Override

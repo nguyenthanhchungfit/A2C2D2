@@ -7,7 +7,8 @@ public enum TypePackage {
     END("END", 2),
     TURN("TURN", 3),
     EMOTI("EMOTI", 4),
-    NAME("NAME", 5);
+    NAME("NAME", 5),
+    MSG("MSG",6);
 
     private String stringValue;
     private int intValue;
