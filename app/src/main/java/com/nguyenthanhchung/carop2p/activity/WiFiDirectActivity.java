@@ -1,20 +1,27 @@
 package com.nguyenthanhchung.carop2p.activity;
 
+
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Build;
+
+import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -24,6 +31,7 @@ import com.nguyenthanhchung.carop2p.MainGameActivityCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.fragment.BoardEmotionFragment;
 import com.nguyenthanhchung.carop2p.fragment.BoardGameFragment;
+import com.nguyenthanhchung.carop2p.fragment.ChatMessageFragment;
 import com.nguyenthanhchung.carop2p.fragment.PlayerFragment;
 import com.nguyenthanhchung.carop2p.handler.ActionListenerHandler;
 import com.nguyenthanhchung.carop2p.handler.WiFiDirectReceiver;
@@ -55,7 +63,9 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     BoardGameFragment boardGameFragment;
     BoardEmotionFragment emotionBoardFragmet;
     PlayerFragment mainPlayerFragment, friendPlayerFragment;
+    ChatMessageFragment mainChatMessageFragment, friendChatMessageFragment;
     ImageButton btnOpenEmotionBoard;
+    ImageButton btnSendMessage;
     boolean isOpenedEmotionBoard = false;
 
     RelativeLayout layoutGame;
@@ -148,11 +158,45 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
                 }
             }
         });
+
+        btnSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater layoutInflaterAndroid = LayoutInflater.from(WiFiDirectActivity.this);
+                View mView = layoutInflaterAndroid.inflate(R.layout.layout_user_input_dialog_box, null);
+                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder
+                        (WiFiDirectActivity.this);
+                alertDialogBuilderUserInput.setView(mView);
+
+                final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+                alertDialogBuilderUserInput
+                        .setCancelable(false)
+                        .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                // ToDo get user input here
+                                Toast.makeText(WiFiDirectActivity.this, userInputDialogEditText.getText().toString(),
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        dialogBox.cancel();
+                                    }
+                                });
+
+                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                alertDialogAndroid.show();
+            }
+        });
     }
 
     private void addControls() {
 
         btnOpenEmotionBoard = findViewById(R.id.btnOpenEmotionBoard);
+        btnSendMessage = findViewById(R.id.btnSendMessage);
 
         // add fragment boardgame
         fragmentTransaction = getFragmentManager().beginTransaction();
@@ -179,9 +223,66 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         fragmentTransaction.replace(R.id.fragmentPlayerBan, friendPlayerFragment);
         fragmentTransaction.commit();
 
+        // Main Chat Fragment
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        mainChatMessageFragment = ChatMessageFragment.newInstance("chat");
+        fragmentTransaction.replace(R.id.fragmentMainChat, mainChatMessageFragment);
+        fragmentTransaction.hide(mainChatMessageFragment);
+        fragmentTransaction.commit();
+
+        // Friend Chat Fragment
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        friendChatMessageFragment = ChatMessageFragment.newInstance("chat");
+        fragmentTransaction.replace(R.id.fragmentFriendChat, friendChatMessageFragment);
+        fragmentTransaction.hide(friendChatMessageFragment);
+        fragmentTransaction.commit();
+
+
         mainPlayer.setId(true);
         secondPlayer.setId(false);
         boardGameFragment.onFromMainToFragmentStatePlayer("state", mainPlayer.getId());
+    }
+
+    private void showMainChat(String text){
+        mainChatMessageFragment.setBackground(R.drawable.out_message_bg);
+        mainChatMessageFragment.setMessage(text);
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.show(mainChatMessageFragment);
+        fragmentTransaction.commit();
+        new CountDownTimer(4000, 4000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.hide(mainChatMessageFragment);
+                fragmentTransaction.commit();
+            }
+        }.start();
+    }
+
+    private void showFriendChat(String text){
+        friendChatMessageFragment.setBackground(R.drawable.in_message_bg);
+        friendChatMessageFragment.setMessage(text);
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.show(friendChatMessageFragment);
+        fragmentTransaction.commit();
+        new CountDownTimer(4000, 4000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.hide(friendChatMessageFragment);
+                fragmentTransaction.commit();
+            }
+        }.start();
     }
 
 
