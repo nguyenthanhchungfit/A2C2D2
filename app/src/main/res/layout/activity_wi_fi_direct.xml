@@ -22,7 +22,6 @@
             android:layout_alignParentLeft="true"
             >
 
-
         </FrameLayout>
 
         <FrameLayout
@@ -44,17 +43,52 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/fragmentMainChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginVertical="235dp"
+            android:layout_marginStart="70dp"
+
+            >
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragmentFriendChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="70dp"
+            android:layout_marginVertical="235dp"
+            />
+
         <ImageButton
             android:id="@+id/btnOpenEmotionBoard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/fragmentPlayerChinh"
-            android:layout_marginStart="34dp"
+            android:layout_marginStart="60dp"
             android:background="@null"
             android:paddingRight="8dp"
             android:paddingTop="8dp"
             app:srcCompat="@drawable/ic_open_emotion" />
+
+        <ImageButton
+            android:id="@+id/btnSendMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/fragmentPlayerChinh"
+            android:layout_marginStart="10dp"
+            android:background="@null"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp"
+            app:srcCompat="@drawable/ic_message" />
 
         <FrameLayout
             android:id="@+id/fragmentEmotionBoard"
@@ -65,6 +99,8 @@
             >
 
         </FrameLayout>
+
+
     </RelativeLayout>
 
     <ListView
