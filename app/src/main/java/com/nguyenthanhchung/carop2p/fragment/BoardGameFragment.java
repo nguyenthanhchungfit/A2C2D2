@@ -38,6 +38,7 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks, Ma
     private ArrayList<CellBoard> listImage;
     MediaPlayer check_click;
     private boolean flag = true;
+    private boolean flag_emotion = false;
     private boolean state_player = false;
 
     public void setCellBoard(String type, int pos){
@@ -103,26 +104,28 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks, Ma
         gvBoard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(listImage.get(position).isFilled() == false){
-                    CellBoard m_img = listImage.get(position);
-                    m_img.setFilled(true);
-                    main.onMsgFromFragmentToMainGame("StatePlayer", "");
+                if(flag_emotion == false){
+                    if(listImage.get(position).isFilled() == false){
+                        CellBoard m_img = listImage.get(position);
+                        m_img.setFilled(true);
+                        main.onMsgFromFragmentToMainGame("StatePlayer", "");
 
-                    if(flag == state_player){   // x
-                        check_click.start();
-                        m_img.setIdImage(R.drawable.ic_x);
-                        flag = false;
-                        main.onMsgFromFragmentToMainGame("GameBoardX", ((Integer)position).toString());
-                    }else{  // o
-                        check_click.start();
-                        Toast.makeText(main, "Bạn chưa được đánh", Toast.LENGTH_SHORT).show();
+                        if(flag == state_player){   // x
+                            check_click.start();
+                            m_img.setIdImage(R.drawable.ic_x);
+                            flag = false;
+                            main.onMsgFromFragmentToMainGame("GameBoardX", ((Integer)position).toString());
+                        }else{  // o
+                            check_click.start();
+                            Toast.makeText(main, "Bạn chưa được đánh", Toast.LENGTH_SHORT).show();
 
 //                        m_img.setIdImage(R.drawable.ic_o);
 //                        flag = true;
 //                        main.onMsgFromFragmentToMainGame("GameBoardO", ((Integer)position).toString());
+                        }
+                        adapter.notifyDataSetChanged();
+                        main.onMsgFromFragmentToMainGame("GameBoard", ((Integer)position).toString());
                     }
-                    adapter.notifyDataSetChanged();
-                    main.onMsgFromFragmentToMainGame("GameBoard", ((Integer)position).toString());
                 }
             }
         });
@@ -133,7 +136,11 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks, Ma
 
     @Override
     public void onMsgFromMainToFrag(String strValue) {
-
+        if(strValue.equals("emotion_open")){
+            flag_emotion = true;
+        }else if(strValue.equals("emotion_close")){
+            flag_emotion = false;
+        }
     }
 
     @Override

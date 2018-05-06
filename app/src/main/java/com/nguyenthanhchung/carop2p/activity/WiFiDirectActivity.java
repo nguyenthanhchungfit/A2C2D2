@@ -143,6 +143,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
                 if(isOpenedEmotionBoard == false){
                     showEmotionBoard();
                     isOpenedEmotionBoard = true;
+                    // Gửi thông điệp tới BoardGameFragment để khóa click
+                    boardGameFragment.onMsgFromMainToFrag("emotion_open");
                 }
             }
         });
@@ -341,6 +343,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
                 if(isOpenedEmotionBoard){
                     hideEmotionBoard();
                     isOpenedEmotionBoard = false;
+                    // Gửi thông điệp tới BoardGame cho đánh
+                    boardGameFragment.onMsgFromMainToFrag("emotion_close");
                 }
             }
         }else if(sender.equals("GameBoardImage")){

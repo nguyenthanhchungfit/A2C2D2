@@ -57,7 +57,6 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
         imgPlayerAVT = layout.findViewById(R.id.imgPlayerAVT);
         imgPlayerSign = layout.findViewById(R.id.imgPlayerSign);
         txtPlayerName = layout.findViewById(R.id.txtPlayerName);
-        Log.d("Player", "onCreate");
         return layout;
     }
 
@@ -68,21 +67,15 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
     }
 
     public void setImgPlayerSign(int idImage){
-        Log.d("Player", "setImage");
         if(imgPlayerSign != null){
-            Log.d("Player", "setImageNull");
             imgPlayerSign.setImageResource(idImage);
         }
     }
 
     public void setPlayName(String name){
-        Log.d("Player", "setName");
         if(txtPlayerName != null){
-            Log.d("Player", "setNameNull");
             txtPlayerName.setText(name);
         }
-
-
     }
 
     @Override
@@ -102,7 +95,7 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
     }
 
     private void changeAVTPlayer() {
-        new CountDownTimer(5000, 5000){
+        new CountDownTimer(3000, 3000){
             @Override
             public void onTick(long millisUntilFinished) {
             }
