@@ -26,7 +26,7 @@ import com.nguyenthanhchung.carop2p.callback_interface.FragmentImageCallback;
 public class PlayerFragment extends Fragment implements FragmentCallBacks, FragmentImageCallback{
     WiFiDirectActivity main;
     Context context;
-    ImageView imgPlayerAVT, imgPlayerSign;
+    ImageView imgPlayerAVT, imgPlayerSign,imgPlayerBG;
     TextView txtPlayerName;
     CountDownTimer countDownTimer;
 
@@ -58,6 +58,7 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
         imgPlayerAVT = layout.findViewById(R.id.imgPlayerAVT);
         imgPlayerSign = layout.findViewById(R.id.imgPlayerSign);
         txtPlayerName = layout.findViewById(R.id.txtPlayerName);
+        imgPlayerBG = layout.findViewById(R.id.imageView);
         return layout;
     }
 
@@ -85,6 +86,12 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
         }
     }
 
+    public void setImgPlayerBG(int idImage){
+        if(imgPlayerBG != null){
+            imgPlayerBG.setImageResource(idImage);
+        }
+    }
+
     @Override
     public void onMsgFromMainToFrag(String strValue) {
 
@@ -95,9 +102,10 @@ public class PlayerFragment extends Fragment implements FragmentCallBacks, Fragm
         if(obj.equals("avatar")){
             setImgPlayerAVT(idImage);
             changeAVTPlayer();
-
         }else if(obj.equals("sign")) {
             setImgPlayerSign(idImage);
+        }else if(obj.equals("turn")) {
+            setImgPlayerBG(idImage);
         }
     }
 

@@ -143,12 +143,20 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         // Set Ten, Set Hinh
         if (mainPlayer.getId() == Boolean.TRUE) {
             mainPlayerFragment.setImgPlayerSign(R.drawable.ic_x);
+
             friendPlayerFragment.setImgPlayerSign(R.drawable.ic_o);
             friendPlayerFragment.setImgPlayerAVT(R.drawable.image_player2);
+
+            mainPlayerFragment.setImgPlayerBG(R.drawable.frame_avt);
+            friendPlayerFragment.setImgPlayerBG(R.drawable.frame_avt_turn);
         } else {
             mainPlayerFragment.setImgPlayerSign(R.drawable.ic_o);
+
             friendPlayerFragment.setImgPlayerSign(R.drawable.ic_x);
             friendPlayerFragment.setImgPlayerAVT(R.drawable.image_player2);
+
+            mainPlayerFragment.setImgPlayerBG(R.drawable.frame_avt_turn);
+            friendPlayerFragment.setImgPlayerBG(R.drawable.frame_avt);
         }
         String name = MySharedPreferences.getStringSharedPreferences(this, "Player", "name");
         mainPlayerFragment.setPlayName(name);
@@ -483,9 +491,11 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
                 secondPlayer.SetOCo(idCell);
                 boardGameFragment.setCellBoard("X", idCell);
             } else {
-                boardGameFragment.setCellBoard("O", idCell);
                 secondPlayer.SetOCo(idCell);
+                boardGameFragment.setCellBoard("O", idCell);
             }
+            mainPlayerFragment.setImgPlayerBG(R.drawable.frame_avt);
+            friendPlayerFragment.setImgPlayerBG(R.drawable.frame_avt_turn);
         } else if (packageData.getType() == TypePackage.END) {
             Toast.makeText(this, "Player 2 out the game", Toast.LENGTH_SHORT).show();
             onBackPressed();
@@ -586,33 +596,22 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             PackageData packageData = new PackageData(TypePackage.TURN, strValue);
             sendMsg(packageData);
             if (mainPlayer.KiemTraKetThuc()) {
-                // Xu ly minh thang
-                Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
                 showEndGame("Bạn thắng!");
             }
+            mainPlayerFragment.setImgPlayerBG(R.drawable.frame_avt_turn);
+            friendPlayerFragment.setImgPlayerBG(R.drawable.frame_avt);
         } else if (sender.equals("GameBoardO")) {
             mainPlayer.SetOCo(Integer.parseInt(strValue));
             PackageData packageData = new PackageData(TypePackage.TURN, strValue);
             sendMsg(packageData);
             if (mainPlayer.KiemTraKetThuc()) {
-                // Xu ly minh thang
-                Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
-                showEndGame("Bạn thua!");
+                showEndGame("Bạn thắng!");
             }
+            mainPlayerFragment.setImgPlayerBG(R.drawable.frame_avt_turn);
+            friendPlayerFragment.setImgPlayerBG(R.drawable.frame_avt);
         } else if (sender.equals("Check")) {
             if (secondPlayer.KiemTraKetThuc()) {
-                // Xu ly nguoi choi thang
-                if (secondPlayer.getId() == Boolean.TRUE)
-                {
-                    Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
-                    showEndGame("Bạn thắng!");
-
-                }
-                else
-                {
-                    Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
-                    showEndGame("Bạn thua!");
-                }
+                showEndGame("Bạn thua!");
             }
         } else if (sender.equals("PlayerFragment")) {
             if (strValue.equals("UpdateView")) {
