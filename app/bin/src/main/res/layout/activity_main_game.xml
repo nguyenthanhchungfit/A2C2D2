@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.nguyenthanhchung.carop2p.activity.MainGameActivity">
+
+
+
+
+    <FrameLayout
+        android:id="@+id/fragmentPlayerChinh"
+        android:layout_width="117dp"
+        android:layout_height="match_parent"
+        android:background="#4CAF50"
+        android:layout_alignParentLeft="true"
+        >
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentBoardGame"
+        android:layout_width="360dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        >
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentPlayerBan"
+        android:layout_width="115dp"
+        android:layout_height="match_parent"
+        android:background="#4CAF50"
+        android:layout_alignParentRight="true"
+        >
+
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/btnOpenEmotionBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="12dp"
+        android:background="@null"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        app:srcCompat="@drawable/ic_open_emotion" />
+
+    <FrameLayout
+        android:id="@+id/fragmentEmotionBoard"
+        android:layout_width="227dp"
+        android:layout_height="130dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
+
+    </FrameLayout>
+
+</RelativeLayout>

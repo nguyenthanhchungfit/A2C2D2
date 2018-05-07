@@ -10,6 +10,13 @@ import android.view.ViewGroup;
 import com.nguyenthanhchung.carop2p.R;
 
 public class HuongDanFragment extends Fragment {
+    public static HuongDanFragment newInstance(String strArgs) {
+        HuongDanFragment fragment = new HuongDanFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("HuongDan", strArgs);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

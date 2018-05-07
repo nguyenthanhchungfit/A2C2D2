@@ -1,13 +1,12 @@
 package com.nguyenthanhchung.carop2p.activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -23,49 +22,53 @@ import com.nguyenthanhchung.carop2p.MainGameActivityCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 
 import com.nguyenthanhchung.carop2p.fragment.HuongDanFragment;
+import com.nguyenthanhchung.carop2p.fragment.KiLucFragment;
+import com.nguyenthanhchung.carop2p.fragment.MainMenuFragment;
 import com.nguyenthanhchung.carop2p.fragment.SettingFragment;
 import com.nguyenthanhchung.carop2p.fragment.ThucHienFragment;
-
-
-import java.util.ArrayList;
 
 public class KhoiDongGameActivity extends AppCompatActivity implements MainGameActivityCallBacks {
     MediaPlayer background_song;
     MediaPlayer button_click_sound;
     FrameLayout frameLayout;
+    FrameLayout menuContainer;
     FragmentTransaction fragmentTransaction;
     HuongDanFragment huongDanFragment;
     ThucHienFragment thucHienFragment;
     SettingFragment settingFragment;
-    boolean isOpenedSetting = false;
+    KiLucFragment kiLucFragment;
+    MainMenuFragment mainMenuFragment;
+    boolean isMenuOpened = false;
+    boolean isSettingOpened = false;
+    boolean isInfoOpened = false;
+    boolean isGuideOpened = false;
+    boolean isBestOpened = false;
     Button btnPlay;
-    Button btnGuide;
-    Button btnInfo;
-    Button btnExit;
+    Button btnMenu;
     boolean doubleBackToExitPressedOnce = false;
-    Button btnSetting;
     int isSound = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_khoi_dong_game);
-        frameLayout = findViewById(R.id.frameContent);
-        frameLayout.setVisibility(View.INVISIBLE);
-
         background_song = MediaPlayer.create(KhoiDongGameActivity.this, R.raw.background_sound);
         background_song.setLooping(true);
         button_click_sound = MediaPlayer.create(KhoiDongGameActivity.this, R.raw.button_click);
         button_click_sound.setLooping(false);
-        //turnOnBackGroundSong();
-
+        addControls();
         //Init button
         btnPlay = findViewById(R.id.btnPlay);
-        btnGuide = findViewById(R.id.btnGuide);
-        btnInfo = findViewById(R.id.btnInfo);
-        btnExit = findViewById(R.id.btnExit);
-        btnSetting = findViewById(R.id.btnSetting);
+        btnMenu = findViewById(R.id.btnMenu);
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                showMenu();
+            }
+        });
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,11 +78,12 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
                 startActivity(intent);
             }
         });
-        String name = MySharedPreferences.getStringSharedPreferences(this,"Player","name");
-        if("".equals(name)){
-            MySharedPreferences.saveStringSharedPreferences(this,"Player","name","Player");
+        String name = MySharedPreferences.getStringSharedPreferences(this, "Player", "name");
+        if ("".equals(name)) {
+            MySharedPreferences.saveStringSharedPreferences(this, "Player", "name", "Player");
         }
     }
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -94,7 +98,7 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
@@ -107,7 +111,7 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
 
     @Override
     public void onResume() {
-       setSound();
+        setSound();
         super.onResume();
     }
 
@@ -116,8 +120,42 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         super.onStart();
     }
 
-    public void turnOnBackGroundSong(){
-        if(background_song != null && background_song.isPlaying()){
+    private void addControls() {
+        // add fragment main menu
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        mainMenuFragment = MainMenuFragment.newInstance("MainMenu");
+        fragmentTransaction.replace(R.id.menuContainer, mainMenuFragment);
+        fragmentTransaction.hide(mainMenuFragment);
+        fragmentTransaction.commit();
+
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        settingFragment = SettingFragment.newInstance("Setting");
+        fragmentTransaction.add(R.id.frameContent, settingFragment, "setting");
+        fragmentTransaction.hide(settingFragment);
+        fragmentTransaction.commit();
+
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        thucHienFragment = thucHienFragment.newInstance("ThucHien");
+        fragmentTransaction.add(R.id.frameContent, thucHienFragment, "thuchien");
+        fragmentTransaction.hide(thucHienFragment);
+        fragmentTransaction.commit();
+
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        huongDanFragment = huongDanFragment.newInstance("HuongDan");
+        fragmentTransaction.add(R.id.frameContent, huongDanFragment, "huongdan");
+        fragmentTransaction.hide(huongDanFragment);
+        fragmentTransaction.commit();
+
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        kiLucFragment = KiLucFragment.newInstance("KiLuc");
+        fragmentTransaction.add(R.id.frameContent, kiLucFragment, "kiluc");
+        fragmentTransaction.hide(kiLucFragment);
+        fragmentTransaction.commit();
+
+    }
+
+    public void turnOnBackGroundSong() {
+        if (background_song != null && background_song.isPlaying()) {
             turnOffBackGroundSong();
         }
         background_song = MediaPlayer.create(KhoiDongGameActivity.this, R.raw.background_sound);
@@ -125,8 +163,8 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         background_song.start();
     }
 
-    public void turnOffBackGroundSong(){
-        if(background_song != null && background_song.isPlaying()){
+    public void turnOffBackGroundSong() {
+        if (background_song != null && background_song.isPlaying()) {
             background_song.stop();
             background_song.release();
             background_song = null;
@@ -134,108 +172,231 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
 
     }
 
-    public void guideGame(View view) {
-        button_click_sound.start();
+    public void showGuide() {
         fragmentTransaction = getFragmentManager().beginTransaction();
-        huongDanFragment = new HuongDanFragment();
-        fragmentTransaction.add(R.id.frameContent, huongDanFragment, "guide");
+        fragmentTransaction.show(huongDanFragment);
         fragmentTransaction.commit();
-        hideBtn();
+        btnPlay.setVisibility(View.INVISIBLE);
+        isGuideOpened = true;
+        if (isInfoOpened) {
+            hideInfo();
+        } else {
+            if (isSettingOpened) {
+                hideSetting();
+            }
+            else
+            if(isBestOpened){
+                hideKiLuc();
+            }
+        }
         //code switch to guide game screen here
     }
 
-    public void exitGuide(View view) {
+    public void hideGuide() {
+//        fragmentTransaction = getFragmentManager().beginTransaction();
+//        huongDanFragment = (HuongDanFragment) getFragmentManager().findFragmentByTag("guide");
+//        fragmentTransaction.remove(huongDanFragment);
+//        fragmentTransaction.commit();
         fragmentTransaction = getFragmentManager().beginTransaction();
-        huongDanFragment = (HuongDanFragment) getFragmentManager().findFragmentByTag("guide");
-        fragmentTransaction.remove(huongDanFragment);
+        fragmentTransaction.hide(huongDanFragment);
         fragmentTransaction.commit();
-        showBtn();
+        isGuideOpened = false;
+
     }
 
-    public void exitInfo(View view) {
+    public void hideInfo() {
+//        fragmentTransaction = getFragmentManager().beginTransaction();
+//        thucHienFragment = (ThucHienFragment) getFragmentManager().findFragmentByTag("info");
+//        fragmentTransaction.remove(thucHienFragment);
+//        fragmentTransaction.commit();
+//        showBtn();
         fragmentTransaction = getFragmentManager().beginTransaction();
-        thucHienFragment = (ThucHienFragment) getFragmentManager().findFragmentByTag("info");
-        fragmentTransaction.remove(thucHienFragment);
+        fragmentTransaction.hide(thucHienFragment);
         fragmentTransaction.commit();
-        showBtn();
+        isInfoOpened = false;
+
     }
 
-    public void showInfo(View view) {
-        button_click_sound.start();
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        thucHienFragment = new ThucHienFragment();
-        fragmentTransaction.add(R.id.frameContent, thucHienFragment, "info");
-        fragmentTransaction.commit();
-        hideBtn();
+    public void showInfo() {
+//        button_click_sound.start();
+//        fragmentTransaction = getFragmentManager().beginTransaction();
+//        thucHienFragment = new ThucHienFragment();
+//        fragmentTransaction.add(R.id.frameContent, thucHienFragment, "info");
+//        fragmentTransaction.commit();
+//        hideBtn();
         //code switch to show info screen here
-    }
-
-    public void exitGame(View view) {
-        button_click_sound.start();
-        finish();
-        //code switch to exit screen here
-    }
-
-    public void hideBtn() {
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.show(thucHienFragment);
+        fragmentTransaction.commit();
         btnPlay.setVisibility(View.INVISIBLE);
-        btnGuide.setVisibility(View.INVISIBLE);
-        btnInfo.setVisibility(View.INVISIBLE);
-        btnExit.setVisibility(View.INVISIBLE);
-        btnSetting.setVisibility(View.INVISIBLE);
-        frameLayout.setVisibility(View.VISIBLE);
+        isInfoOpened = true;
+        if (isSettingOpened) {
+            hideSetting();
+        } else {
+            if (isGuideOpened) {
+                hideGuide();
+            }
+            else
+            if(isBestOpened){
+                hideKiLuc();
+            }
+        }
     }
 
-    public void showBtn() {
-        frameLayout.setVisibility(View.INVISIBLE);
-        btnPlay.setVisibility(View.VISIBLE);
-        btnGuide.setVisibility(View.VISIBLE);
-        btnInfo.setVisibility(View.VISIBLE);
-        btnExit.setVisibility(View.VISIBLE);
-        btnSetting.setVisibility(View.VISIBLE);
-    }
 
-    public void turnOnSetting(View view) {
-        button_click_sound.start();
+    public void showMenu() {
         fragmentTransaction = getFragmentManager().beginTransaction();
-        settingFragment = new SettingFragment();
-        fragmentTransaction.add(R.id.frameContent, settingFragment, "setting");
+        fragmentTransaction.show(mainMenuFragment);
         fragmentTransaction.commit();
-        hideBtn();
-        isOpenedSetting = true;
-    }
-    private void hideSetting(){
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        settingFragment = (SettingFragment)getFragmentManager().findFragmentByTag("setting");
-        fragmentTransaction.remove(settingFragment);
-        fragmentTransaction.commit();
-        showBtn();
+        btnMenu.setVisibility(View.INVISIBLE);
+        isMenuOpened = true;
     }
 
-    private void setSound(){
-        isSound = MySharedPreferences.getIntergerSharedPreferences(this,"Setting","sound");
-        if(isSound >= 0){
+    public void hideMenu() {
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.hide(mainMenuFragment);
+        fragmentTransaction.commit();
+        btnMenu.setVisibility(View.VISIBLE);
+        isMenuOpened = false;
+    }
+
+    public void showSetting() {
+//        button_click_sound.start();
+//        fragmentTransaction = getFragmentManager().beginTransaction();
+//        settingFragment = new SettingFragment();
+//        fragmentTransaction.add(R.id.frameContent, settingFragment, "setting");
+//        fragmentTransaction.commit();
+//        btnPlay.setVisibility(View.INVISIBLE);
+//        frameLayout.setVisibility(View.VISIBLE);
+//        isSettingOpened = true;
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.show(settingFragment);
+        fragmentTransaction.commit();
+        btnPlay.setVisibility(View.INVISIBLE);
+        isSettingOpened = true;
+        if (isInfoOpened) {
+            hideInfo();
+        } else {
+            if (isGuideOpened) {
+                hideGuide();
+            }
+            else
+            if(isBestOpened){
+                hideKiLuc();
+            }
+        }
+
+    }
+    private void hideSetting() {
+//        fragmentTransaction = getFragmentManager().beginTransaction();
+//        settingFragment = (SettingFragment)getFragmentManager().findFragmentByTag("setting");
+//        fragmentTransaction.remove(settingFragment);
+//        fragmentTransaction.commit();
+//        showBtn();
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.hide(settingFragment);
+        fragmentTransaction.commit();
+        isSettingOpened = false;
+    }
+    public void showKiLuc() {
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.show(kiLucFragment);
+        fragmentTransaction.commit();
+        btnPlay.setVisibility(View.INVISIBLE);
+        isBestOpened = true;
+        if (isInfoOpened) {
+            hideInfo();
+        } else {
+            if (isGuideOpened) {
+                hideGuide();
+            }
+            else
+                if(isSettingOpened){
+                hideSetting();
+            }
+        }
+
+    }
+
+    private  void hideKiLuc(){
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.hide(kiLucFragment);
+        fragmentTransaction.commit();
+        isBestOpened = false;
+    }
+
+    private void setSound() {
+        isSound = MySharedPreferences.getIntergerSharedPreferences(this, "Setting", "sound");
+        if (isSound >= 0) {
             turnOnBackGroundSong();
-        }else{
+        } else {
             turnOffBackGroundSong();
         }
     }
 
+
     @Override
     public void onMsgFromFragmentToMainGame(String sender, String strValue) {
-        if(sender == null || strValue == null) return;
-        if(sender.equals("SettingFragmentClose")){
-            if(strValue.equals("close")){
-                if(isOpenedSetting){
-                    hideSetting();
-                    isOpenedSetting = false;
-                    //setSound();
+        if (sender == null || strValue == null) return;
+        if (sender.equals("MainMenu")) {
+            if (strValue.equals("close")) {
+                if (isMenuOpened) {
+                    hideMenu();
+                    if (isInfoOpened || isSettingOpened || isGuideOpened || isBestOpened) {
+                        hideSetting();
+                        hideInfo();
+                        hideGuide();
+                        hideKiLuc();
+                        btnPlay.setVisibility(View.VISIBLE);
+                    }
                 }
-            }else if(strValue.equals("sound")){
-                setSound();
-            }
-        }
-        else if(sender.equals("GameBoard")){
+            } else if (strValue.equals("setting")) {
+                if (isSettingOpened) {
+                    hideSetting();
+                } else {
+                    showSetting();
+                    isInfoOpened = false;
+                    isGuideOpened = false;
+                    isBestOpened = false;
 
+                }
+            } else if (strValue.equals("info")) {
+                if (isInfoOpened) {
+                    hideInfo();
+                } else {
+                    showInfo();
+                    isSettingOpened = false;
+                    isGuideOpened = false;
+                    isBestOpened = false;
+
+                }
+            } else if (strValue.equals("guide")) {
+                if (isGuideOpened) {
+                    hideGuide();
+                } else {
+                    showGuide();
+                    isSettingOpened = false;
+                    isInfoOpened = false;
+                    isBestOpened = false;
+                }
+            }
+            else if (strValue.equals("best")) {
+                if (isBestOpened) {
+                    hideKiLuc();
+                } else {
+                    showKiLuc();
+                    isSettingOpened = false;
+                    isInfoOpened = false;
+                    isGuideOpened = false;
+                }
+            }
+
+        } else {
+            if (sender.equals("SettingFragment")) {
+                if (strValue.equals("sound")) {
+                    setSound();
+                }
+            }
         }
     }
 }

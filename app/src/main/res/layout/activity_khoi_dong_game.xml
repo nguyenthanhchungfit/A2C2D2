@@ -2,96 +2,66 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/start_background"
-    android:id="@+id/ConstraintContent"
     tools:context="com.nguyenthanhchung.carop2p.activity.KhoiDongGameActivity">
 
 
     <Button
         android:id="@+id/btnPlay"
-        android:layout_width="wrap_content"
+        android:layout_width="93dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="82dp"
-        android:layout_marginStart="142dp"
         android:layout_marginTop="229dp"
         android:background="@drawable/custom_btn_play"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnGuide"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="82dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="229dp"
-        android:background="@drawable/custom_btn_guide"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnInfo"
-        app:layout_constraintStart_toEndOf="@+id/btnPlay"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="guideGame"/>
-
-    <Button
-        android:id="@+id/btnInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="82dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="229dp"
-        android:background="@drawable/custom_btn_info"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnExit"
-        app:layout_constraintStart_toEndOf="@+id/btnGuide"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="showInfo"/>
-
-    <Button
-        android:id="@+id/btnExit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="82dp"
-        android:layout_marginEnd="156dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="229dp"
-        android:background="@drawable/custom_btn_exit"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnInfo"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="exitGame"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
-        android:id="@+id/btnSetting"
+        android:id="@+id/btnMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        android:layout_marginEnd="488dp"
-        android:layout_marginStart="16dp"
-        android:text="Button"
-        android:onClick="turnOnSetting"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPlay" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/frameContent"
-        android:layout_width="500dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="90dp"
-        android:layout_marginEnd="47dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="90dp"
+        android:layout_width="410dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:foregroundGravity="top"
+        android:maxHeight="340dp"
+        android:maxWidth="410dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/menuContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/menuContainer"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></FrameLayout>
+        app:layout_constraintStart_toEndOf="@+id/frameContent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

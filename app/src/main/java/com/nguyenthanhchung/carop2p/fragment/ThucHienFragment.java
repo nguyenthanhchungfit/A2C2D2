@@ -16,7 +16,13 @@ import java.util.ArrayList;
 public class ThucHienFragment extends ListFragment {
     ArrayList<SinhVien> arraySinhVien;
     SinhVienAdapter adapter;
-
+    public static ThucHienFragment newInstance(String strArgs) {
+        ThucHienFragment fragment = new ThucHienFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("ThucHien", strArgs);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

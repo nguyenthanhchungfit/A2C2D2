@@ -24,7 +24,6 @@ public class SettingFragment extends Fragment implements FragmentCallBacks {
     Context context;
     TextView txtPlayerName;
     Button btnSave;
-    Button btnCancel;
     Switch swSound;
 
     public static SettingFragment newInstance(String strArgs) {
@@ -55,7 +54,6 @@ public class SettingFragment extends Fragment implements FragmentCallBacks {
         txtPlayerName = layout.findViewById(R.id.txtPlayerName);
         txtPlayerName.setText(MySharedPreferences.getStringSharedPreferences(main,"Player","name"));
         btnSave = layout.findViewById(R.id.btnSave);
-        btnCancel = layout.findViewById(R.id.btnCancel);
         swSound = layout.findViewById(R.id.swSound);
         swSound.setTextOff("Off");
         swSound.setTextOn("On");
@@ -78,14 +76,8 @@ public class SettingFragment extends Fragment implements FragmentCallBacks {
                     MySharedPreferences.saveIntegerSharedPreferences(main,"Setting","sound",-1);
                 }
                 Toast.makeText(main, "Lưu cài đặt thành công", Toast.LENGTH_SHORT).show();
-                main.onMsgFromFragmentToMainGame("SettingFragmentClose","sound");
+                main.onMsgFromFragmentToMainGame("SettingFragment","sound");
 
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                main.onMsgFromFragmentToMainGame("SettingFragmentClose", "close");
             }
         });
         swSound = layout.findViewById(R.id.swSound);
