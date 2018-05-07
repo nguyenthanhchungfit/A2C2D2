@@ -128,30 +128,6 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         fragmentTransaction.hide(mainMenuFragment);
         fragmentTransaction.commit();
 
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        settingFragment = SettingFragment.newInstance("Setting");
-        fragmentTransaction.add(R.id.frameContent, settingFragment, "setting");
-        fragmentTransaction.hide(settingFragment);
-        fragmentTransaction.commit();
-
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        thucHienFragment = thucHienFragment.newInstance("ThucHien");
-        fragmentTransaction.add(R.id.frameContent, thucHienFragment, "thuchien");
-        fragmentTransaction.hide(thucHienFragment);
-        fragmentTransaction.commit();
-
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        huongDanFragment = huongDanFragment.newInstance("HuongDan");
-        fragmentTransaction.add(R.id.frameContent, huongDanFragment, "huongdan");
-        fragmentTransaction.hide(huongDanFragment);
-        fragmentTransaction.commit();
-
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        kiLucFragment = KiLucFragment.newInstance("KiLuc");
-        fragmentTransaction.add(R.id.frameContent, kiLucFragment, "kiluc");
-        fragmentTransaction.hide(kiLucFragment);
-        fragmentTransaction.commit();
-
     }
 
     public void turnOnBackGroundSong() {
@@ -174,8 +150,10 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
 
     public void showGuide() {
         fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.show(huongDanFragment);
+        huongDanFragment = HuongDanFragment.newInstance("HuongDan");
+        fragmentTransaction.add(R.id.frameContent, huongDanFragment, "huongdan");
         fragmentTransaction.commit();
+
         btnPlay.setVisibility(View.INVISIBLE);
         isGuideOpened = true;
         if (isInfoOpened) {
@@ -183,9 +161,7 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         } else {
             if (isSettingOpened) {
                 hideSetting();
-            }
-            else
-            if(isBestOpened){
+            } else if (isBestOpened) {
                 hideKiLuc();
             }
         }
@@ -193,40 +169,31 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
     }
 
     public void hideGuide() {
-//        fragmentTransaction = getFragmentManager().beginTransaction();
-//        huongDanFragment = (HuongDanFragment) getFragmentManager().findFragmentByTag("guide");
-//        fragmentTransaction.remove(huongDanFragment);
-//        fragmentTransaction.commit();
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(huongDanFragment);
-        fragmentTransaction.commit();
-        isGuideOpened = false;
+
+        if (isGuideOpened) {
+            fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.remove(huongDanFragment);
+            fragmentTransaction.commit();
+            isGuideOpened = false;
+        }
 
     }
 
     public void hideInfo() {
-//        fragmentTransaction = getFragmentManager().beginTransaction();
-//        thucHienFragment = (ThucHienFragment) getFragmentManager().findFragmentByTag("info");
-//        fragmentTransaction.remove(thucHienFragment);
-//        fragmentTransaction.commit();
-//        showBtn();
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(thucHienFragment);
-        fragmentTransaction.commit();
-        isInfoOpened = false;
 
+        if (isInfoOpened) {
+            fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.remove(thucHienFragment);
+            fragmentTransaction.commit();
+            isInfoOpened = false;
+        }
     }
 
     public void showInfo() {
-//        button_click_sound.start();
-//        fragmentTransaction = getFragmentManager().beginTransaction();
-//        thucHienFragment = new ThucHienFragment();
-//        fragmentTransaction.add(R.id.frameContent, thucHienFragment, "info");
-//        fragmentTransaction.commit();
-//        hideBtn();
         //code switch to show info screen here
         fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.show(thucHienFragment);
+        thucHienFragment = ThucHienFragment.newInstance("ThucHien");
+        fragmentTransaction.add(R.id.frameContent, thucHienFragment, "thuchien");
         fragmentTransaction.commit();
         btnPlay.setVisibility(View.INVISIBLE);
         isInfoOpened = true;
@@ -235,9 +202,7 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         } else {
             if (isGuideOpened) {
                 hideGuide();
-            }
-            else
-            if(isBestOpened){
+            } else if (isBestOpened) {
                 hideKiLuc();
             }
         }
@@ -261,17 +226,12 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
     }
 
     public void showSetting() {
-//        button_click_sound.start();
-//        fragmentTransaction = getFragmentManager().beginTransaction();
-//        settingFragment = new SettingFragment();
-//        fragmentTransaction.add(R.id.frameContent, settingFragment, "setting");
-//        fragmentTransaction.commit();
-//        btnPlay.setVisibility(View.INVISIBLE);
-//        frameLayout.setVisibility(View.VISIBLE);
-//        isSettingOpened = true;
+
         fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.show(settingFragment);
+        settingFragment = SettingFragment.newInstance("Setting");
+        fragmentTransaction.add(R.id.frameContent, settingFragment, "setting");
         fragmentTransaction.commit();
+
         btnPlay.setVisibility(View.INVISIBLE);
         isSettingOpened = true;
         if (isInfoOpened) {
@@ -279,29 +239,28 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         } else {
             if (isGuideOpened) {
                 hideGuide();
-            }
-            else
-            if(isBestOpened){
+            } else if (isBestOpened) {
                 hideKiLuc();
             }
         }
 
     }
+
     private void hideSetting() {
-//        fragmentTransaction = getFragmentManager().beginTransaction();
-//        settingFragment = (SettingFragment)getFragmentManager().findFragmentByTag("setting");
-//        fragmentTransaction.remove(settingFragment);
-//        fragmentTransaction.commit();
-//        showBtn();
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(settingFragment);
-        fragmentTransaction.commit();
-        isSettingOpened = false;
+        if (isSettingOpened) {
+            fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.remove(settingFragment);
+            fragmentTransaction.commit();
+            isSettingOpened = false;
+        }
     }
+
     public void showKiLuc() {
         fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.show(kiLucFragment);
+        kiLucFragment = KiLucFragment.newInstance("KiLuc");
+        fragmentTransaction.add(R.id.frameContent, kiLucFragment, "kiLuc");
         fragmentTransaction.commit();
+
         btnPlay.setVisibility(View.INVISIBLE);
         isBestOpened = true;
         if (isInfoOpened) {
@@ -309,20 +268,20 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         } else {
             if (isGuideOpened) {
                 hideGuide();
-            }
-            else
-                if(isSettingOpened){
+            } else if (isSettingOpened) {
                 hideSetting();
             }
         }
 
     }
 
-    private  void hideKiLuc(){
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(kiLucFragment);
-        fragmentTransaction.commit();
-        isBestOpened = false;
+    private void hideKiLuc() {
+        if (isBestOpened) {
+            fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.remove(kiLucFragment);
+            fragmentTransaction.commit();
+            isBestOpened = false;
+        }
     }
 
     private void setSound() {
@@ -341,27 +300,26 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         if (sender.equals("MainMenu")) {
             if (strValue.equals("close")) {
                 if (isMenuOpened) {
+                    btnPlay.setVisibility(View.VISIBLE);
                     hideMenu();
-                    if (isInfoOpened || isSettingOpened || isGuideOpened || isBestOpened) {
-                        hideSetting();
-                        hideInfo();
-                        hideGuide();
-                        hideKiLuc();
-                        btnPlay.setVisibility(View.VISIBLE);
-                    }
+                    hideSetting();
+                    hideInfo();
+                    hideGuide();
+                    hideKiLuc();
                 }
             } else if (strValue.equals("setting")) {
                 if (isSettingOpened) {
+                    btnPlay.setVisibility(View.VISIBLE);
                     hideSetting();
                 } else {
                     showSetting();
                     isInfoOpened = false;
                     isGuideOpened = false;
                     isBestOpened = false;
-
                 }
             } else if (strValue.equals("info")) {
                 if (isInfoOpened) {
+                    btnPlay.setVisibility(View.VISIBLE);
                     hideInfo();
                 } else {
                     showInfo();
@@ -372,6 +330,7 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
                 }
             } else if (strValue.equals("guide")) {
                 if (isGuideOpened) {
+                    btnPlay.setVisibility(View.VISIBLE);
                     hideGuide();
                 } else {
                     showGuide();
@@ -379,9 +338,9 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
                     isInfoOpened = false;
                     isBestOpened = false;
                 }
-            }
-            else if (strValue.equals("best")) {
+            } else if (strValue.equals("best")) {
                 if (isBestOpened) {
+                    btnPlay.setVisibility(View.VISIBLE);
                     hideKiLuc();
                 } else {
                     showKiLuc();

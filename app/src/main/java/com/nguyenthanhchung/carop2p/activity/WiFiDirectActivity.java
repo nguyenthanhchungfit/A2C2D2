@@ -480,17 +480,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         } else if (packageData.getType() == TypePackage.MSG) {
             showFriendChat(packageData.getMsg());
         }
-//
-//        if(msg.equals("RESET")){
-//            //resetCanvasBoard();
-//        }else if (msg.equals("LEFT")) {
-//            onBackPressed();
-//        }
-//        else{
-//            //Sử lý dữ liệu dựa trên msg
-//        }
-
-
+        
     }
 
     /*Đóng show listView danh sách các thiết bị*/
