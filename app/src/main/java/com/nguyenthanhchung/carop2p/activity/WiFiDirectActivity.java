@@ -263,7 +263,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         // Endgame Chat Fragment
         fragmentTransaction = getFragmentManager().beginTransaction();
         endGameFragment = EndGameFragment.newInstance("EndGame");
-        fragmentTransaction.replace(R.id.fragmentEndGame, endGameFragment);
+        fragmentTransaction.replace(R.id.fragmentGameEnd, endGameFragment);
         fragmentTransaction.hide(endGameFragment);
         fragmentTransaction.commit();
     }
@@ -617,6 +617,11 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         } else if (sender.equals("PlayerFragment")) {
             if (strValue.equals("UpdateView")) {
                 ShowName();
+            }
+        }
+        else if (sender.equals("EndGame")) {
+            if (strValue.equals("OK")) {
+                onBackPressed();
             }
         }
     }
