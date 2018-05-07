@@ -2,21 +2,28 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context=".activity.KhoiDongGameActivity">
+    android:layout_width="500dp"
+    android:layout_height="250dp"
+    android:background="#273c75"
+    tools:context=".activity.KhoiDongGameActivity"
+    >
 
     <TextView
+        android:background="#e67e22"
         android:id="@+id/textView"
-        android:layout_width="176dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="244dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#fff"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center"
         android:text="@string/huong_dan"
-        android:textColor="#ff0000"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,45 +31,41 @@
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="600dp"
+        android:layout_marginTop="0dp"
         android:onClick="exitGuide"
+
         android:src="@android:drawable/btn_dialog"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="565dp"
-        android:layout_height="267dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="470dp"
+            android:layout_height="296dp"
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="296dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:paddingLeft="2dp"
-                android:paddingRight="30dp"
-                android:scrollbars="vertical"
-                android:text="2 người chơi sẽ oẳn tù tì để giành quyền đi trước và sẽ đánh thay phiên nhau mỗi lượt. Cả 2 đều có 10s để suy nghĩ nếu hết giờ hệ thống sẽ tự đánh thay cho bạn. Khi có 1 người chơi có 5 kí hiệu liên tiếp theo hàng dọc, ngang chéo thì người chơi đó sẽ thắng và người còn lại sẽ thua với điều kiện không bị chặn 2 đầu."
-                android:textColor="#333333"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-        </LinearLayout>
-    </ScrollView>
+            android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
+            android:text="@string/luat_choi"
+            android:textColor="#333333"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

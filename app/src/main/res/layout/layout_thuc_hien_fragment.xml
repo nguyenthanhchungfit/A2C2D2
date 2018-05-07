@@ -2,35 +2,40 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:layout_width="500dp"
+    android:layout_height="300dp"
+    android:background="#273c75"
     tools:context="com.nguyenthanhchung.carop2p.activity.KhoiDongGameActivity">
 
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="159dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="244dp"
-        android:layout_marginTop="16dp"
-
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:background="#e67e22"
+        android:gravity="center"
         android:text="Thực hiện"
-        android:textColor="#ff0000"
-        android:textSize="35sp"
+        android:textColor="#fff"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@android:id/list"
-        android:layout_width="670dp"
+        android:layout_width="460dp"
         android:layout_height="252dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="15dp"
         android:background="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 

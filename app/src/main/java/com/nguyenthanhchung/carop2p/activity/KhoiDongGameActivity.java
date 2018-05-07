@@ -98,7 +98,7 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         button_click_sound.start();
         fragmentTransaction = getFragmentManager().beginTransaction();
         huongDanFragment = new HuongDanFragment();
-        fragmentTransaction.add(R.id.frameContent, huongDanFragment, "guide");
+        fragmentTransaction.replace(R.id.frameContent, huongDanFragment, "guide");
         fragmentTransaction.commit();
         hideBtn();
         //code switch to guide game screen here
@@ -124,7 +124,7 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         button_click_sound.start();
         fragmentTransaction = getFragmentManager().beginTransaction();
         thucHienFragment = new ThucHienFragment();
-        fragmentTransaction.add(R.id.frameContent, thucHienFragment, "info");
+        fragmentTransaction.replace(R.id.frameContent, thucHienFragment, "info");
         fragmentTransaction.commit();
         hideBtn();
         //code switch to show info screen here

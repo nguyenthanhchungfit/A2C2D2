@@ -147,5 +147,4 @@ public class Game extends AsyncTask<String,String,String>{
         writer.println(message);
     }
 
-
 }
