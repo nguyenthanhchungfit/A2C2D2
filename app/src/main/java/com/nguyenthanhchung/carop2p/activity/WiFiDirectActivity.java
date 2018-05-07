@@ -35,6 +35,7 @@ import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.fragment.BoardEmotionFragment;
 import com.nguyenthanhchung.carop2p.fragment.BoardGameFragment;
 import com.nguyenthanhchung.carop2p.fragment.ChatMessageFragment;
+import com.nguyenthanhchung.carop2p.fragment.EndGameFragment;
 import com.nguyenthanhchung.carop2p.fragment.PlayerFragment;
 import com.nguyenthanhchung.carop2p.handler.ActionListenerHandler;
 import com.nguyenthanhchung.carop2p.handler.WiFiDirectReceiver;
@@ -67,6 +68,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     BoardEmotionFragment emotionBoardFragmet;
     PlayerFragment mainPlayerFragment, friendPlayerFragment;
     ChatMessageFragment mainChatMessageFragment, friendChatMessageFragment;
+    EndGameFragment endGameFragment;
     ImageButton btnOpenEmotionBoard;
     ImageButton btnSendMessage;
     boolean isOpenedEmotionBoard = false;
@@ -257,6 +259,13 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         fragmentTransaction.replace(R.id.fragmentFriendChat, friendChatMessageFragment);
         fragmentTransaction.hide(friendChatMessageFragment);
         fragmentTransaction.commit();
+
+        // Endgame Chat Fragment
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        endGameFragment = EndGameFragment.newInstance("EndGame");
+        fragmentTransaction.replace(R.id.fragmentEndGame, endGameFragment);
+        fragmentTransaction.hide(endGameFragment);
+        fragmentTransaction.commit();
     }
 
     public void setPlayers(boolean isHost) {
@@ -312,7 +321,12 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             }
         }.start();
     }
-
+    private void showEndGame(String result){
+        endGameFragment.onMsgFromMainToFrag(result);
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.show(endGameFragment);
+        fragmentTransaction.commit();
+    }
 
     /**
      * Tìm kiếm thiết bị có thể kết nối
@@ -574,6 +588,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             if (mainPlayer.KiemTraKetThuc()) {
                 // Xu ly minh thang
                 Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
+                showEndGame("Bạn thắng!");
             }
         } else if (sender.equals("GameBoardO")) {
             mainPlayer.SetOCo(Integer.parseInt(strValue));
@@ -582,14 +597,22 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             if (mainPlayer.KiemTraKetThuc()) {
                 // Xu ly minh thang
                 Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
+                showEndGame("Bạn thua!");
             }
         } else if (sender.equals("Check")) {
             if (secondPlayer.KiemTraKetThuc()) {
                 // Xu ly nguoi choi thang
                 if (secondPlayer.getId() == Boolean.TRUE)
+                {
                     Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
+                    showEndGame("Bạn thắng!");
+
+                }
                 else
+                {
                     Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
+                    showEndGame("Bạn thua!");
+                }
             }
         } else if (sender.equals("PlayerFragment")) {
             if (strValue.equals("UpdateView")) {

@@ -5,12 +5,14 @@
     android:layout_width="400dp"
     android:layout_height="340dp"
     android:background="#273c75"
+    android:maxHeight="340dp"
+    android:maxWidth="400dp"
     tools:context=".activity.KhoiDongGameActivity">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="550dp"
-        android:layout_height="50dp"
+        android:layout_width="400dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="178dp"
         android:background="#e67e22"
         android:paddingBottom="5dp"
@@ -18,7 +20,8 @@
         android:text="Kỉ lục"
         android:textAlignment="center"
         android:textColor="#ffffff"
-        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

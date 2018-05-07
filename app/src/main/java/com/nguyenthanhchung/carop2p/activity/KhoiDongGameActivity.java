@@ -105,6 +105,11 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
 
     @Override
     public void onPause() {
+        hideMenu();
+        hideSetting();
+        hideInfo();
+        hideGuide();
+        hideKiLuc();
         turnOffBackGroundSong();
         super.onPause();
     }
@@ -127,7 +132,6 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         fragmentTransaction.replace(R.id.menuContainer, mainMenuFragment);
         fragmentTransaction.hide(mainMenuFragment);
         fragmentTransaction.commit();
-
     }
 
     public void turnOnBackGroundSong() {

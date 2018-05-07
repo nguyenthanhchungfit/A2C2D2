@@ -21,14 +21,21 @@ public class ThucHienFragment extends ListFragment {
         Bundle bundle = new Bundle();
         bundle.putString("ThucHien", strArgs);
         fragment.setArguments(bundle);
+        fragment.setListSinhVien();
         return fragment;
     }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        adapter = new SinhVienAdapter(getActivity(), R.layout.layout_adapter_student, arraySinhVien);
+        setListAdapter(adapter);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        setListSinhVien();
-        adapter = new SinhVienAdapter(getActivity(), R.layout.layout_adapter_student, arraySinhVien);
-        setListAdapter(adapter);
         return inflater.inflate(R.layout.layout_thuc_hien_fragment, container, false);
     }
 

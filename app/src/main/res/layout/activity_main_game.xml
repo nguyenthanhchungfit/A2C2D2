@@ -57,9 +57,15 @@
         android:layout_width="227dp"
         android:layout_height="130dp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        >
+        android:layout_centerVertical="true">
 
     </FrameLayout>
+    <FrameLayout
+        android:id="@+id/fragmentEndGame"
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
 
+    </FrameLayout>
 </RelativeLayout>
