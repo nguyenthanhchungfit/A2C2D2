@@ -1,9 +1,15 @@
 package com.nguyenthanhchung.carop2p.activity;
 
+import android.Manifest;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Handler;
+import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,7 +49,10 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
     Button btnMenu;
     boolean doubleBackToExitPressedOnce = false;
     int isSound = 1;
-
+    final int MY_PERMISSIONS_REQUEST_ACCESS_WIFI_STATE = 0;
+    final int MY_PERMISSIONS_REQUEST_ACCESS_NETWORK_STATE = 1;
+    final int MY_PERMISSIONS_REQUEST_CHANGE_WIFI_STATE = 2;
+    final int MY_PERMISSIONS_REQUEST_INTERNET = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +86,73 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         String name = MySharedPreferences.getStringSharedPreferences(this, "Player", "name");
         if ("".equals(name)) {
             MySharedPreferences.saveStringSharedPreferences(this, "Player", "name", "Player");
+        }
+
+        if(Build.VERSION.SDK_INT> Build.VERSION_CODES.LOLLIPOP_MR1){
+            checkSPermission(Manifest.permission.ACCESS_WIFI_STATE,MY_PERMISSIONS_REQUEST_ACCESS_WIFI_STATE);
+            checkSPermission(Manifest.permission.ACCESS_NETWORK_STATE,MY_PERMISSIONS_REQUEST_ACCESS_NETWORK_STATE);
+            checkSPermission(Manifest.permission.CHANGE_WIFI_STATE,MY_PERMISSIONS_REQUEST_CHANGE_WIFI_STATE);
+            checkSPermission(Manifest.permission.INTERNET,MY_PERMISSIONS_REQUEST_INTERNET);
+        }
+
+        if (Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+    }
+
+    void checkSPermission(String type, int key){
+        if (ContextCompat.checkSelfPermission(this,
+                type)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    type)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{type},
+                        key);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_ACCESS_WIFI_STATE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                } else {
+                    Toast.makeText(this, "ACCESS_WIFI_STATE Denied", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            case MY_PERMISSIONS_REQUEST_ACCESS_NETWORK_STATE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                } else {
+                    Toast.makeText(this, "ACCESS_NETWORK_STATE Denied", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            case MY_PERMISSIONS_REQUEST_CHANGE_WIFI_STATE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                } else {
+                    Toast.makeText(this, "CHANGE_WIFI_STATE Denied", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            case MY_PERMISSIONS_REQUEST_INTERNET:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                } else {
+                    Toast.makeText(this, "INTERNET Denied", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 

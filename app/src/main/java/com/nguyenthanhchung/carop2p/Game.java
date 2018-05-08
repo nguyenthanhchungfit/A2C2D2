@@ -3,6 +3,7 @@ package com.nguyenthanhchung.carop2p;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
 import com.nguyenthanhchung.carop2p.handler.Sender;
@@ -158,6 +159,7 @@ public class Game extends AsyncTask<String,String,String>{
             try {
                 socket.close();
             } catch (IOException e) {
+                Toast.makeText(mActivity,"Lỗi disconnect vui lòng thoát game tắt wifi và khởi động lại",Toast.LENGTH_SHORT);
                 e.printStackTrace();
             }
         }

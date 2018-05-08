@@ -337,6 +337,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.show(endGameFragment);
         fragmentTransaction.commit();
+        boardGameFragment.onMsgFromMainToFrag("emotion_open");
     }
 
     /**
@@ -404,7 +405,6 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         registerWifiReceiver();
         mManager.discoverPeers(mChannel, new ActionListenerHandler(this, "Discover peers"));
-
         //findViewById(R.id.helpFAB).setVisibility(View.VISIBLE);
 
     }
@@ -416,20 +416,21 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         PackageData packageData = new PackageData(TypePackage.END, "1");
         sendMsg(packageData);
         try {
-            Thread.sleep(1000);
+            Toast.makeText(this,"Waitting disconnect!",Toast.LENGTH_SHORT);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        mManager.requestGroupInfo(mChannel, new WifiP2pManager.GroupInfoListener() {
-            @Override
-            public void onGroupInfoAvailable(WifiP2pGroup group) {
-                if (group != null && mManager != null && mChannel != null
-                        && group.isGroupOwner()) {
-                    mManager.removeGroup(mChannel, new ActionListenerHandler(thisActivity, "Group removal"));
-                }
-            }
-        });
-        //mManager.removeGroup(mChannel, new ActionListenerHandler(this, "Group removal"));
+//        mManager.requestGroupInfo(mChannel, new WifiP2pManager.GroupInfoListener() {
+//            @Override
+//            public void onGroupInfoAvailable(WifiP2pGroup group) {
+//                if (group != null && mManager != null && mChannel != null
+//                        && group.isGroupOwner()) {
+//                    mManager.removeGroup(mChannel, new ActionListenerHandler(thisActivity, "Group removal"));
+//                }
+//            }
+//        });
+        mManager.removeGroup(mChannel, new ActionListenerHandler(this, "Group removal"));
         mManager.cancelConnect(mChannel, new ActionListenerHandler(this, "Canceling connect"));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mManager.stopPeerDiscovery(mChannel, new ActionListenerHandler(this, "Stop Discovery"));
@@ -638,17 +639,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         } else if (sender.equals("Check")) {
             if (secondPlayer.KiemTraKetThuc()) {
                 // Xu ly nguoi choi thang
-                if (secondPlayer.getId() == Boolean.TRUE)
-                {
-                    Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
-                    showEndGame("Bạn thắng!");
-
-                }
-                else
-                {
-                    Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
-                    showEndGame("Bạn thua!");
-                }
+                showEndGame("Bạn thua!");
             }
         } else if (sender.equals("PlayerFragment")) {
             if (strValue.equals("UpdateView")) {
