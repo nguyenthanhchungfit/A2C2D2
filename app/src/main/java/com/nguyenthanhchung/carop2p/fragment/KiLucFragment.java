@@ -8,10 +8,9 @@ import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.nguyenthanhchung.carop2p.FragmentCallBacks;
+import com.nguyenthanhchung.carop2p.callback_interface.FragmentCallBacks;
 import com.nguyenthanhchung.carop2p.Helper.MyFormatHelper;
 import com.nguyenthanhchung.carop2p.Helper.MySharedPreferences;
 import com.nguyenthanhchung.carop2p.R;

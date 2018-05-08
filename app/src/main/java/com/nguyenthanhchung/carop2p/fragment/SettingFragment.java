@@ -2,7 +2,6 @@ package com.nguyenthanhchung.carop2p.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -14,7 +13,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nguyenthanhchung.carop2p.FragmentCallBacks;
+import com.nguyenthanhchung.carop2p.callback_interface.FragmentCallBacks;
 import com.nguyenthanhchung.carop2p.Helper.MySharedPreferences;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.activity.KhoiDongGameActivity;

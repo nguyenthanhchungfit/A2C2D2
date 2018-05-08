@@ -2,7 +2,6 @@ package com.nguyenthanhchung.carop2p.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,8 +13,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.nguyenthanhchung.carop2p.FragmentCallBacks;
-import com.nguyenthanhchung.carop2p.activity.MainGameActivity;
+import com.nguyenthanhchung.carop2p.callback_interface.FragmentCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
 import com.nguyenthanhchung.carop2p.adapter.ImageCellAdapter;

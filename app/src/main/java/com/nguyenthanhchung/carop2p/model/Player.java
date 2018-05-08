@@ -10,6 +10,8 @@ public class Player {
     private int SoHang = 15;
     private boolean id;
 
+    private int soBuocDi;
+
     public Player(){
         BanCo = new boolean[SoHang][SoCot];
         for(int i = 0; i < SoHang; ++i) {
@@ -18,6 +20,7 @@ public class Player {
             }
         }
         id = false;
+        soBuocDi = 0;
     }
 
     public boolean getId() {
@@ -28,12 +31,21 @@ public class Player {
         this.id = id;
     }
 
+    public int getSoBuocDi() {
+        return soBuocDi;
+    }
+
+    public void setSoBuocDi(int soBuocDi) {
+        this.soBuocDi = soBuocDi;
+    }
+
     // Hàm reset bàn cờ
     public void TaoLaiBanCo(){
         for(int i = 0; i < SoHang; ++i)
             for(int j = 0; j < SoCot; ++j){
                 BanCo[i][j] = false;
             }
+        soBuocDi = 0;
     }
 
     public boolean SetOCo(int position)
@@ -42,8 +54,11 @@ public class Player {
         int toaDoX = position%SoCot;
         if(KiemTraTrongBanCo(toaDoX, toaDoY)==false)
             return false;
-        else
+        else{
             BanCo[toaDoX][toaDoY] = true;
+            soBuocDi++;
+        }
+
         return true;
     }
 

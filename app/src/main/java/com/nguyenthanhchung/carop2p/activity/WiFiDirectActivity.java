@@ -30,7 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nguyenthanhchung.carop2p.Helper.MySharedPreferences;
-import com.nguyenthanhchung.carop2p.MainGameActivityCallBacks;
+import com.nguyenthanhchung.carop2p.callback_interface.MainGameActivityCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.fragment.BoardEmotionFragment;
 import com.nguyenthanhchung.carop2p.fragment.BoardGameFragment;
@@ -44,6 +44,7 @@ import com.nguyenthanhchung.carop2p.model.Player;
 import com.nguyenthanhchung.carop2p.model.TypePackage;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pManager.ChannelListener, MainGameActivityCallBacks {
 
@@ -82,6 +83,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
     final Player secondPlayer = new Player();   // Người chơi với mình
 
     int isSound = 1;
+    Date timeStart = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +139,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         layoutGame.setVisibility(RelativeLayout.GONE);
         //this.Show();
 
+        timeStart = new Date();
     }
 
     private void ShowName() {
@@ -559,6 +562,27 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
         }
     }
 
+
+    private void LuuKiLuc(){
+        Date timeEnd = new Date();
+        long miliseconds = timeEnd.getTime() - timeStart.getTime();
+        int kiLucMili = MySharedPreferences.getIntergerSharedPreferences(this, "Kiluc", "thoigianngan");
+        if(kiLucMili == 0){
+            kiLucMili = (int) miliseconds;
+        }else if(kiLucMili > 0 && kiLucMili > miliseconds){
+            kiLucMili = (int) miliseconds;
+        }
+        int kiLucSoBuocDi = MySharedPreferences.getIntergerSharedPreferences(this, "Kiluc", "nuocdingan");
+        int soBuocDi = mainPlayer.getSoBuocDi();
+        if(kiLucSoBuocDi == 0){
+            kiLucSoBuocDi = soBuocDi;
+        }else if(kiLucSoBuocDi > 0 && soBuocDi < kiLucSoBuocDi){
+            kiLucSoBuocDi = soBuocDi;
+        }
+
+        MySharedPreferences.saveIntegerSharedPreferences(this, "Kiluc", "thoigianngan", kiLucMili);
+        MySharedPreferences.saveIntegerSharedPreferences(this, "Kiluc", "nuocdingan", kiLucSoBuocDi);
+    }
     /**
      * Nhận dữ liệu từ Fragment và gửi sang thiết bị khác bằng sendMsg
      *
@@ -596,6 +620,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             PackageData packageData = new PackageData(TypePackage.TURN, strValue);
             sendMsg(packageData);
             if (mainPlayer.KiemTraKetThuc()) {
+                LuuKiLuc();
                 showEndGame("Bạn thắng!");
             }
             mainPlayerFragment.setImgPlayerBG(R.drawable.frame_avt_turn);
@@ -605,13 +630,25 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             PackageData packageData = new PackageData(TypePackage.TURN, strValue);
             sendMsg(packageData);
             if (mainPlayer.KiemTraKetThuc()) {
+                LuuKiLuc();
                 showEndGame("Bạn thắng!");
             }
             mainPlayerFragment.setImgPlayerBG(R.drawable.frame_avt_turn);
             friendPlayerFragment.setImgPlayerBG(R.drawable.frame_avt);
         } else if (sender.equals("Check")) {
             if (secondPlayer.KiemTraKetThuc()) {
-                showEndGame("Bạn thua!");
+                // Xu ly nguoi choi thang
+                if (secondPlayer.getId() == Boolean.TRUE)
+                {
+                    Toast.makeText(this, "X Win", Toast.LENGTH_SHORT).show();
+                    showEndGame("Bạn thắng!");
+
+                }
+                else
+                {
+                    Toast.makeText(this, "O Win", Toast.LENGTH_SHORT).show();
+                    showEndGame("Bạn thua!");
+                }
             }
         } else if (sender.equals("PlayerFragment")) {
             if (strValue.equals("UpdateView")) {

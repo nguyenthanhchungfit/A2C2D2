@@ -6,19 +6,15 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.text.method.ScrollingMovementMethod;
 import android.widget.Toast;
 
 import com.nguyenthanhchung.carop2p.Helper.MySharedPreferences;
 
-import com.nguyenthanhchung.carop2p.MainGameActivityCallBacks;
+import com.nguyenthanhchung.carop2p.callback_interface.MainGameActivityCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 
 import com.nguyenthanhchung.carop2p.fragment.HuongDanFragment;
