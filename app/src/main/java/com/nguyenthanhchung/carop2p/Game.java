@@ -3,6 +3,7 @@ package com.nguyenthanhchung.carop2p;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
 import com.nguyenthanhchung.carop2p.handler.Sender;
@@ -36,7 +37,6 @@ public class Game extends AsyncTask<String,String,String>{
     private String message;
     private WiFiDirectActivity mActivity;
 
-    //private LanPlayer localPlayer;
 
     @Override
     protected String doInBackground(String... params) {
@@ -61,7 +61,7 @@ public class Game extends AsyncTask<String,String,String>{
             writer = new PrintWriter(socket.getOutputStream(), true);
 
             Log.d(LOG_TAG, "Server created on: " + SERVER_PORT);
-
+            mActivity.sendData();
             while(socket != null){
                 msg = reader.readLine();
                 if( msg==null || isCancelled()) break;
@@ -73,6 +73,9 @@ public class Game extends AsyncTask<String,String,String>{
         }finally {
             try {
                 socket.close();
+                //Lỗi kết nối
+                //Cần show hiển thị ở đây
+                //mActivity.onBackPressed();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -93,7 +96,7 @@ public class Game extends AsyncTask<String,String,String>{
             inputStream = socket.getInputStream();
             reader = new BufferedReader(new InputStreamReader(inputStream));
             writer = new PrintWriter(socket.getOutputStream(), true);
-
+            mActivity.sendData();
             while(true){
                 msg = reader.readLine();
                 if( msg == null || isCancelled() ) break;
@@ -108,6 +111,9 @@ public class Game extends AsyncTask<String,String,String>{
         } finally {
             try {
                 socket.close();
+                //Lỗi kết nối
+                //Cần show hiển thị ở đây
+                //mActivity.onBackPressed();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -120,6 +126,7 @@ public class Game extends AsyncTask<String,String,String>{
         super.onProgressUpdate(values);
         Log.d(LOG_TAG,"Progress update");
         //Nhận dữ liệu từ thiết bị khác và truyền cho mActivity để xử lí trên giao diện
+        //Xử lí bằng gói bằng PackageData
         mActivity.handleIncoming(values[0]);
     }
 
@@ -147,5 +154,15 @@ public class Game extends AsyncTask<String,String,String>{
         writer.println(message);
     }
 
+    public void Close(){
+        if(!socket.isClosed()){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                Toast.makeText(mActivity,"Lỗi disconnect vui lòng thoát game tắt wifi và khởi động lại",Toast.LENGTH_SHORT);
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

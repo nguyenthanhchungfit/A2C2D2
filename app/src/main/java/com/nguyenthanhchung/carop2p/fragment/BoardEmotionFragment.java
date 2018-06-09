@@ -2,7 +2,6 @@ package com.nguyenthanhchung.carop2p.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -12,14 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.nguyenthanhchung.carop2p.FragmentCallBacks;
-import com.nguyenthanhchung.carop2p.activity.MainGameActivity;
+import com.nguyenthanhchung.carop2p.callback_interface.FragmentCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 import com.nguyenthanhchung.carop2p.activity.WiFiDirectActivity;
 import com.nguyenthanhchung.carop2p.adapter.ImageEmotionAdapter;
-import com.nguyenthanhchung.carop2p.callback_interface.FragmentImageCallback;
 import com.nguyenthanhchung.carop2p.image_resource.ImageProvider;
 import com.nguyenthanhchung.carop2p.model.ImageEmotion;
 

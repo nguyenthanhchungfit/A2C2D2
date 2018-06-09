@@ -5,11 +5,14 @@ public enum TypePackage {
     ERROR("ERROR", 0),
     START("START", 1),
     END("END", 2),
-    TURN("TURN", 3);
-
+    TURN("TURN", 3),
+    EMOTI("EMOTI", 4),
+    NAME("NAME", 5),
+    MSG("MSG",6);
 
     private String stringValue;
     private int intValue;
+
     private TypePackage(String toString, int value) {
         stringValue = toString;
         intValue = value;

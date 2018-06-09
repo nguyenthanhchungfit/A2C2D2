@@ -23,10 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainGameActivity"
-            android:screenOrientation="landscape"
-            >
-        </activity>
         <activity android:name=".activity.WiFiDirectActivity"
             android:screenOrientation="landscape"
             >

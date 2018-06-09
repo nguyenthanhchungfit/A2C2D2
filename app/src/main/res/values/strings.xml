@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">CaroP2P</string>
     <string name="huong_dan">Hướng dẫn</string>
+    <string name="luat_choi">
+        Sau khi mở wifi và kết nối thành công giữa hai máy.
+        Người chơi lần lượt thay phiên nhau đánh trên bàn cờ, bất kì ai có một hàng dọc hoặc ngang hoặc
+        chéo 5 quân cờ liên tiếp trước thì người đó chiến thắng! Cho phép chặn hai đầu. Trong quá trình chơi,
+        người chơi có thể gửi tin nhắn hoặc emotion cho người chơi với mình!
+    </string>
 </resources>

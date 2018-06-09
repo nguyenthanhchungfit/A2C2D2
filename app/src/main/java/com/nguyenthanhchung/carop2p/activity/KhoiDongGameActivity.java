@@ -19,7 +19,6 @@ import com.nguyenthanhchung.carop2p.MainGameActivityCallBacks;
 import com.nguyenthanhchung.carop2p.R;
 
 import com.nguyenthanhchung.carop2p.fragment.HuongDanFragment;
-import com.nguyenthanhchung.carop2p.fragment.KiLucFragment;
 import com.nguyenthanhchung.carop2p.fragment.SettingFragment;
 import com.nguyenthanhchung.carop2p.fragment.ThucHienFragment;
 
@@ -34,16 +33,12 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
     HuongDanFragment huongDanFragment;
     ThucHienFragment thucHienFragment;
     SettingFragment settingFragment;
-    KiLucFragment kiLucFragment;
     boolean isOpenedSetting = false;
-    boolean isOpenedKiLuc = false;
-
     Button btnPlay;
     Button btnGuide;
     Button btnInfo;
     Button btnExit;
     Button btnSetting;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +59,6 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         btnInfo = findViewById(R.id.btnInfo);
         btnExit = findViewById(R.id.btnExit);
         btnSetting = findViewById(R.id.btnSetting);
-
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,17 +163,6 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         hideBtn();
         isOpenedSetting = true;
     }
-
-    public void turnOnKiLuc(View view) {
-        button_click_sound.start();
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        kiLucFragment = new KiLucFragment();
-        fragmentTransaction.add(R.id.frameContent, kiLucFragment, "Kiluc");
-        fragmentTransaction.commit();
-        hideBtn();
-        isOpenedKiLuc = true;
-    }
-
     private void hideSetting(){
         fragmentTransaction = getFragmentManager().beginTransaction();
         settingFragment = (SettingFragment)getFragmentManager().findFragmentByTag("setting");
@@ -187,35 +170,18 @@ public class KhoiDongGameActivity extends AppCompatActivity implements MainGameA
         fragmentTransaction.commit();
         showBtn();
     }
-
-    private  void hideKiLuc(){
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        kiLucFragment = (KiLucFragment)getFragmentManager().findFragmentByTag("Kiluc");
-        fragmentTransaction.remove(kiLucFragment);
-        fragmentTransaction.commit();
-        showBtn();
-    }
-
     @Override
     public void onMsgFromFragmentToMainGame(String sender, String strValue) {
         if(sender == null || strValue == null) return;
-        if(sender.equals("SettingFragmentClose")) {
-            if (strValue.equals("close")) {
-                if (isOpenedSetting) {
+        if(sender.equals("SettingFragmentClose")){
+            if(strValue.equals("close")){
+                if(isOpenedSetting){
                     hideSetting();
                     isOpenedSetting = false;
                 }
-            } else if (sender.equals("GameBoard")) {
+            }
+        }else if(sender.equals("GameBoard")){
 
-            }
-        }
-        else if(sender.equals("KilucFragmentClose")){
-            if (strValue.equals("close")){
-                if (isOpenedKiLuc) {
-                    hideKiLuc();
-                    isOpenedKiLuc = false;
-                }
-            }
         }
     }
 }
