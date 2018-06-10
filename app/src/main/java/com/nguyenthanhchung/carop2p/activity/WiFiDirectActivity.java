@@ -623,6 +623,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             if (mainPlayer.KiemTraKetThuc()) {
                 LuuKiLuc();
                 showEndGame("Bạn thắng!");
+            }else if(boardGameFragment.checkHoa()){
+                showEndGame("Hòa");
             }
             mainPlayerFragment.setImgPlayerBG(R.drawable.frame_avt_turn);
             friendPlayerFragment.setImgPlayerBG(R.drawable.frame_avt);
@@ -633,6 +635,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             if (mainPlayer.KiemTraKetThuc()) {
                 LuuKiLuc();
                 showEndGame("Bạn thắng!");
+            }else if(boardGameFragment.checkHoa()){
+                showEndGame("Hòa");
             }
             mainPlayerFragment.setImgPlayerBG(R.drawable.frame_avt_turn);
             friendPlayerFragment.setImgPlayerBG(R.drawable.frame_avt);
@@ -640,6 +644,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements WifiP2pMana
             if (secondPlayer.KiemTraKetThuc()) {
                 // Xu ly nguoi choi thang
                 showEndGame("Bạn thua!");
+            }else if(boardGameFragment.checkHoa()){
+                showEndGame("Hòa");
             }
         } else if (sender.equals("PlayerFragment")) {
             if (strValue.equals("UpdateView")) {

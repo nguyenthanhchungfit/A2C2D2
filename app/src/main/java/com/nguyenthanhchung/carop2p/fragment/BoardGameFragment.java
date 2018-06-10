@@ -72,6 +72,16 @@ public class BoardGameFragment extends Fragment implements FragmentCallBacks, Ma
         adapter.notifyDataSetChanged();
     }
 
+    public boolean checkHoa(){
+        listImage = ImageProvider.getCELL_IMAGE_LIST();
+        for(int i =0; i < listImage.size();++i){
+            if(listImage.get(i).isFilled() == false){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static BoardGameFragment newInstance(String strArgs){
         BoardGameFragment fragment = new BoardGameFragment();
         Bundle args = new Bundle();
